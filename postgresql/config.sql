@@ -34,3 +34,22 @@ CREATE TABLE places (
 
 GRANT INSERT,UPDATE,DELETE ON TABLE public.accounts TO culturo; -- Allow culturo to write to table_2
 GRANT SELECT ON TABLE public.places TO culturo; -- Allow culturo to read table_1
+
+-- Создание роли пользователя 'culturopro'
+CREATE ROLE culturopro WITH LOGIN PASSWORD 'EptGvfiHh1KVkpKS-Qkn';
+
+-- Добавление прав доступа к базе данных 'culturo'
+GRANT CONNECT ON DATABASE culturo TO culturopro;
+GRANT USAGE ON SCHEMA public TO culturopro;
+
+-- Добавление прав доступа к таблице 'places'
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.places TO culturopro;
+
+-- Запрет доступа к другим таблицам
+REVOKE ALL PRIVILEGES ON TABLE public.accounts FROM culturopro;
+
+-- Изменение текущей базы данных на 'culturo'
+\connect culturo;
+
+-- Подключение роли 'culturopro' к текущей сессии
+SET ROLE culturopro;
