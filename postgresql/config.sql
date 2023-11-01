@@ -19,3 +19,18 @@ CREATE TABLE IF NOT EXISTS accounts (
     email VARCHAR(255) NOT NULL,
     registration_date TIMESTAMP NOT NULL
 );
+
+-- Создание таблицы 'places'
+CREATE TABLE places (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    photo_path VARCHAR(255) NOT NULL, -- Это поле будет хранить путь к папке с фотографиями
+    description TEXT NOT NULL,
+    hours_of_operation TEXT NOT NULL,
+    contact_phone VARCHAR(20) NOT NULL,
+    location POINT -- POINT может использоваться для хранения координат местонахождения, но это опционально
+);
+
+
+GRANT INSERT,UPDATE,DELETE ON TABLE public.accounts TO culturo; -- Allow culturo to write to table_2
+GRANT SELECT ON TABLE public.places TO culturo; -- Allow culturo to read table_1
