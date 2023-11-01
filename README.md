@@ -36,3 +36,24 @@
 Проект использует современную микровеб-фреймворк Flask, базу данных **PostgreSQL**, а также самые передовые инструменты для обработки HTML и запросов HTTP, такие как **Beautiful Soup 4** и **Requests**. **Flask** предоставляет простой и мощный интерфейс для веб-приложений, а **PostgreSQL** является одной из самых популярных систем управления базами данных с открытым исходным кодом. Beautiful Soup и Requests позволяют взаимодействовать с сайтами и получать информацию из них, что является ключевым функционалом нашего проекта.
 
 [Вернуться](#путеводитель)
+
+
+---
+
+
+[![Header](https://github.com/AsQqqq/culturo/blob/master/GitAssets/image/3.png?raw=true)](#о-проекте)
+
+### Разработчики
+
+**Удодов Данила**
+
+[![GitHub Streak](http://github-readme-streak-stats.herokuapp.com?user=AsQqqq&border_radius=3&locale=ru&mode=weekly)](https://github.com/AsQqqq)
+
+
+**Перекалин Серафим**
+
+[![GitHub Streak](http://github-readme-streak-stats.herokuapp.com?user=blazzzhenny&border_radius=3&locale=ru&mode=weekly)](https://github.com/blazzzhenny)
+
+
+
+[Вернуться](#путеводитель)
