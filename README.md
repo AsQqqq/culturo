@@ -1,7 +1,7 @@
 # Культуро
 
 
-[![Header](https://github.com/AsQqqq/culturo/blob/master/GitAssets/image/1.png?raw=true)](#о-проекте)
+[![Picture](https://github.com/AsQqqq/culturo/blob/master/GitAssets/image/1.png?raw=true)](#культуро)
 
 
 ### О проекте
@@ -23,11 +23,13 @@
 - [Главная](#культуро)
 - [О прокте](#о-проекте)
 - [Описания репозитория](#описание-репозитория)
+- [Настройка Postgresql](#настройка-postgresql)
+- [Разработчики](#разработчики)
 
 
 ---
 
-[![Header](https://github.com/AsQqqq/culturo/blob/master/GitAssets/image/2.png?raw=true)](#о-проекте)
+[![Picture](https://github.com/AsQqqq/culturo/blob/master/GitAssets/image/2.png?raw=true)](#культуро)
 
 ### Описание репозитория
 
@@ -35,11 +37,41 @@
 
 [Вернуться](#путеводитель)
 
+---
+
+[![Picture](https://github.com/AsQqqq/culturo/blob/master/GitAssets/image/4.png?raw=true)](#культуро)
+
+
+### Настройка Postgresql
+
+Чтобы настроить **PostgreSQL**, сначала скачайте его с [официального сайта](https://www.postgresql.org/download/). Затем запустите скачанный файл и следуйте указаниям мастера установки.
+
+Когда установка будет завершена, добавьте этот репозиторий в свою систему.
+
+Затем перейдите в папку с установленной **postgresql** (в этом репиозитории) и запустите программу psql с указанием пользователя “postgres” и файла конфигурации “config.sql”. Это должно выглядеть примерно так:
+
+```
+$ psql -U postgres -f config.sql
+```
+
+Эта команда создаст необходимые базы данных и пользователей в PostgreSQL, а также настроит их соответствующим образом.
+
+Если вывелась ошибка:
+
+```
+D:\programm\gitCulturo\postgresql>psql -U postgres -f config.sql
+'psql' is not recognized as an internal or external command,
+operable program or batch file.
+```
+
+то зайдите в [это]() описание
+
+[Вернуться](#путеводитель)
 
 ---
 
 
-[![Header](https://github.com/AsQqqq/culturo/blob/master/GitAssets/image/3.png?raw=true)](#о-проекте)
+[![Picture](https://github.com/AsQqqq/culturo/blob/master/GitAssets/image/3.png?raw=true)](#культуро)
 
 ### Разработчики
 
