@@ -59,12 +59,12 @@ $ psql -U postgres -f config.sql
 Если вывелась ошибка:
 
 ```
-D:\programm\gitCulturo\postgresql>psql -U postgres -f config.sql
+$ psql -U postgres -f config.sql
 'psql' is not recognized as an internal or external command,
 operable program or batch file.
 ```
 
-то зайдите в [это]() описание
+то зайдите в [это](https://github.com/AsQqqq/culturo/blob/master/GitAssets/MD/ERROR.md) описание
 
 [Вернуться](#путеводитель)
 
