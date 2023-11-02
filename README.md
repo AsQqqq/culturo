@@ -106,6 +106,7 @@ pip install -r requirements.txt
 
 Python установит все зависимости, перечисленные в файле requirements.txt, в вашем виртуальном окружении.
 
+
 [Вернуться](#путеводитель)
 
 ---
@@ -137,10 +138,10 @@ operable program or batch file.
 
 **то зайдите в [это](https://github.com/AsQqqq/culturo/blob/master/GitAssets/MD/ERROR.md#ошибка-команды-psql) описание**
 
+
 [Вернуться](#путеводитель)
 
 ---
-
 
 [![Picture](https://github.com/AsQqqq/culturo/blob/master/GitAssets/image/3.png?raw=true)](#культуро)
 
@@ -155,14 +156,14 @@ operable program or batch file.
 
 **Перекалин Серафим**
 
-[![GitHub Streak](http://github-readme-streak-stats.herokuapp.com?user=blazzzhenny&border_radius=3&locale=ru&mode=weekly)](https://github.com/blazzzhenny)
+> Основной род занятия в IT - разработка мобильных приложений и Frontend.
 
+[![GitHub Streak](http://github-readme-streak-stats.herokuapp.com?user=blazzzhenny&border_radius=3&locale=ru&mode=weekly)](https://github.com/blazzzhenny)
 
 
 [Вернуться](#путеводитель)
 
 ---
-
 
 [![Picture](https://github.com/AsQqqq/culturo/blob/master/GitAssets/image/6.png?raw=true)](#культуро)
 
