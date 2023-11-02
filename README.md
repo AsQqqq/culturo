@@ -23,9 +23,10 @@
 - [Главная](#культуро)
 - [О прокте](#о-проекте)
 - [Описания репозитория](#описание-репозитория)
-- [Настройка Python](#настройка-python)
+- [Настройка Python](#настройка-проекта)
 - [Настройка Postgresql](#настройка-postgresql)
 - [Разработчики](#разработчики)
+- **[Нашёл ошибку!](#разработчики)**
 
 
 ---
@@ -156,6 +157,21 @@ operable program or batch file.
 
 [![GitHub Streak](http://github-readme-streak-stats.herokuapp.com?user=blazzzhenny&border_radius=3&locale=ru&mode=weekly)](https://github.com/blazzzhenny)
 
+
+
+[Вернуться](#путеводитель)
+
+---
+
+
+[![Picture](https://github.com/AsQqqq/culturo/blob/master/GitAssets/image/6.png?raw=true)](#культуро)
+
+### Нашёл ошибку в проекте
+
+Если вы нашли ошибку в проекте, свяжитель с разработчик по этой [почте](mailto:asqdanil@yandex.ru)
+``` text
+asqdanil@yandex.ru
+```
 
 
 [Вернуться](#путеводитель)
