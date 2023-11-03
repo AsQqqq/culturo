@@ -26,6 +26,7 @@
 - [Настройка Python](#настройка-проекта)
 - [Настройка Postgresql](#настройка-postgresql)
 - [Разработчики](#разработчики)
+- [Ошибки при установке](https://github.com/AsQqqq/culturo/blob/master/GitAssets/MD/ERROR.md#ошибка-команды-psql)
 - **[Нашёл ошибку!](#нашёл-ошибку-в-проекте)**
 
 
@@ -128,15 +129,8 @@ $ psql -U postgres -f config.sql
 
 Эта команда создаст необходимые базы данных и пользователей в PostgreSQL, а также настроит их соответствующим образом.
 
-Если вывелась ошибка:
 
-``` bash
-$ psql -U postgres -f config.sql
-'psql' is not recognized as an internal or external command,
-operable program or batch file.
-```
-
-**то зайдите в [это](https://github.com/AsQqqq/culturo/blob/master/GitAssets/MD/ERROR.md#ошибка-команды-psql) описание**
+В случай ошибок, смотрите [здесь](https://github.com/AsQqqq/culturo/blob/master/GitAssets/MD/ERROR.md#ошибка-команды-psql).
 
 
 [Вернуться](#путеводитель)
