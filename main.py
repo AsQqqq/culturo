@@ -6,11 +6,19 @@ app = Flask(__name__)
 def index() -> render_template:
     """Основная вкладка"""
     return render_template('index.html')
+    return "Main Page"
 
-@app.route('/about')
-def about() -> str: 
+
+@app.route('/login')
+def login() -> str: 
     "О нас"
-    return render_template('about.html')
+    return render_template('sign_in.html')
+
+
+@app.route('/register')
+def register() -> str: 
+    "О нас"
+    return render_template('sign_up.html')
 
 if __name__ == "__main__":
     "Запуск кода"

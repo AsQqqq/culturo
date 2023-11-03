@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Культуро</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="{{ url_for('static', filename='/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+	</head>
+	<body>
+		<div class="wrapper" style="background-color: #e0e5e9;">
+			<div class="inner">
+				<div class="image-holder">
+					<img src="{{ url_for('static', filename='images/login-form-sign-in.jpg') }}" alt="Image">
+				</div>
+				<form id="sign_in_form" action="" method="post">
+                    <h3>Вход</h3>
+                    <div class="form-wrapper">
+                        <input type="text" placeholder="Имя пользователя" class="form-control">
+                        <i class="zmdi zmdi-account"></i>
+                    </div>
+                    <div class="form-wrapper">
+                        <input type="password" placeholder="Пароль" class="form-control">
+                        <i class="zmdi zmdi-lock"></i>
+                    </div>
+                    <button>Войти
+                        <i class="zmdi zmdi-arrow-right"></i>
+                    </button>
+                    <div class="switch_link">
+                        <a href="/register">Нет аккаунта?</a>
+                    </div>
+                </form>
+			</div>
+		</div>
+	</body>
+	<script src="script.js"></script>
+</html>
