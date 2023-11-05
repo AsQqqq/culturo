@@ -143,7 +143,7 @@ $ psql -U postgres -f config.sql
 
 **Удодов Данила**
 
-> Чёртовски крут в бэкенде, фанатею от фронта, а машинки - моя вечная любовь! <3
+> Чeртовски крут в бэкенде, фанатею от фронта, а машинки - моя вечная любовь! <3
 
 [![GitHub Streak](http://github-readme-streak-stats.herokuapp.com?user=AsQqqq&border_radius=3&locale=ru&mode=weekly)](https://github.com/AsQqqq)
 

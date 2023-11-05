@@ -6,9 +6,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="{{ url_for('static', filename='/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css') }}">
 		<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+		<script src="/static/script/validatorSignIn.js"></script>
 	</head>
 	<body>
-		<div class="wrapper" style="background-color: #e0e5e9;">
+		<div class="wrapper" style="background-image: url(/static/images/background.svg);">
 			<div class="inner">
 				<div class="image-holder">
 					<img src="{{ url_for('static', filename='images/login-form-sign-in.jpg') }}" alt="Image">
@@ -16,14 +17,16 @@
 				<form id="sign_in_form" action="" method="post">
                     <h3>Вход</h3>
                     <div class="form-wrapper">
-                        <input type="text" placeholder="Имя пользователя" class="form-control">
+						<!-- 20 символов логин -->
+                        <input type="text" placeholder="Имя пользователя" name="login" onkeyup="validateLogin()" class="form-control">
                         <i class="zmdi zmdi-account"></i>
                     </div>
                     <div class="form-wrapper">
-                        <input type="password" placeholder="Пароль" class="form-control">
+						<!-- 20 символов пароль -->
+                        <input type="password" placeholder="Пароль" name="password" class="form-control">
                         <i class="zmdi zmdi-lock"></i>
                     </div>
-                    <button>Войти
+                    <button id="sign_in_button" disabled>Войти
                         <i class="zmdi zmdi-arrow-right"></i>
                     </button>
                     <div class="switch_link">
@@ -33,5 +36,5 @@
 			</div>
 		</div>
 	</body>
-	<script src="script.js"></script>
+	<script src="/static/script/validatorButtonSignIn.js"></script>
 </html>

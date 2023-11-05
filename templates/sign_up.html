@@ -4,13 +4,12 @@
 		<meta charset="utf-8">
 		<title>Культуро</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		
 		<link rel="stylesheet" href="{{ url_for('static', filename='/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css') }}">
 		<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
+		<script src="/static/script/validatorSignUp.js"></script>
 	</head>
 	<body>
-		<div class="wrapper" style="background-color: #e0e5e9;">
+		<div class="wrapper" style="background-image: url(/static/images/background.svg);">
 			<div class="inner">
 				<div class="image-holder">
 					<img src="{{ url_for('static', filename='images/login-form-sign-up.jpg') }}" alt="Image">
@@ -18,26 +17,31 @@
 				<form id="sign_up_form" action="" method="post">
 					<h3>Регистрация</h3>
 					<div class="form-group">
-						<input type="text" placeholder="Имя" class="form-control">
-						<input type="text" placeholder="Фамилия" class="form-control">
+						<!-- 19 символов Имя и Фамилия -->
+						<input type="text" placeholder="Имя" class="form-control" name="name" onkeyup="validateName()" maxlength="20" required>
+						<input type="text" placeholder="Фамилия" class="form-control" name="surname" onkeyup="validateSurname()" maxlength="20" required>
 					</div>
 					<div class="form-wrapper">
-						<input type="text" placeholder="Имя пользователя" class="form-control">
+						<!-- 20 символов логин -->
+						<input type="text" placeholder="Имя пользователя (только латиница)" class="form-control" name="login" onkeyup="validateLogin()" maxlength="30" required>
 						<i class="zmdi zmdi-account"></i>
 					</div>
 					<div class="form-wrapper">
-						<input type="text" placeholder="Электронная почта" class="form-control">
+						<!-- 40 символов почта -->
+						<input type="text" placeholder="Электронная почта" class="form-control" name="email" onkeyup="validateEmail()" required>
 						<i class="zmdi zmdi-email"></i>
 					</div>
 					<div class="form-wrapper">
-						<input type="password" placeholder="Пароль" class="form-control">
+						<!-- 40 символов пароль -->
+						<input type="password" placeholder="Пароль" class="form-control" name="password" onkeyup="validatePassword()" required>
 						<i class="zmdi zmdi-lock"></i>
 					</div>
 					<div class="form-wrapper">
-						<input type="password" placeholder="Подтвердите пароль" class="form-control">
+						<!-- 40 символов подтверждение пароля -->
+						<input type="password" placeholder="Подтвердите пароль" class="form-control" name="confirm_password" onkeyup="validateRePassword()" required>
 						<i class="zmdi zmdi-lock"></i>
 					</div>
-					<button>Зарегистрироваться
+					<button id="sign_up_button" disabled>Зарегистрироваться
 						<i class="zmdi zmdi-arrow-right"></i>
 					</button>
 					<div class="switch_link">
@@ -47,4 +51,5 @@
 			</div>
 		</div>
 	</body>
+<script src="/static/script/validatorButtonSignUp.js"></script>
 </html>
