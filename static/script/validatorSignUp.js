@@ -64,6 +64,12 @@ function validatePassword () {
   let passwordValue = passwordInput.value;
   let passwordLength = passwordValue.length;
 
+  var reg = /[а-яА-ЯёЁ]/g;
+
+  if (passwordValue.search(reg) != -1) {
+    passwordValue = passwordValue.replace(reg, '');
+  }
+
   if (passwordLength < 8) {
     setErrorColor(passwordInput);
   } else {
@@ -76,6 +82,12 @@ function validateRePassword () {
   let passwordValue = passwordInput.value;
   let rePasswordInput = document.getElementsByName("confirm_password")[0];
   let rePasswordValue = rePasswordInput.value
+
+  var reg = /[а-яА-ЯёЁ]/g; 
+
+  if (rePasswordValue.search(reg) != -1) {
+    rePasswordValue = rePasswordValue.replace(reg, '');
+  }
 
   if (rePasswordValue != passwordValue) {
     setErrorColor(rePasswordInput);

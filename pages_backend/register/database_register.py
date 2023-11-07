@@ -1,0 +1,61 @@
+from database.dibs import database_query
+from datetime import datetime
+from . import generate_code, generate_user_id
+
+
+
+def generate_verification_code(login: str):
+    """Генерация проверочного кода"""
+    code = generate_code(login=login)
+
+    copy_query = f"SELECT * FROM code WHERE code = '{code}'"
+    cursor = database_query(copy_query, "place", "return")
+    existing_entry = cursor.fetchone()
+    print(existing_entry)
+    if existing_entry:
+        generate_verification_code(login=login)
+        return
+
+    sql_query = f"SELECT * FROM code WHERE login = '{login}' AND activate = True"
+    cursor = database_query(sql_query, "place", "return")
+    existing_entry = cursor.fetchone()
+
+    if existing_entry: 
+        sql_query = f"UPDATE code SET activate = False WHERE login = '{login}'"
+        database_query(sql_query, "place", "none")
+
+    sql_query = f"SELECT * FROM code WHERE code = '{code}'"
+    cursor = database_query(sql_query, "place", "return")
+    existing_entry = cursor.fetchone()
+    
+    if existing_entry:
+        generate_verification_code(login=login)
+        return
+
+
+    sql_query = f"INSERT INTO code (code, login, activate) VALUES ('{code}', '{login}', True)"
+    database_query(sql_query, "place", "none")
+
+
+def pre_save_account(name, surname, email, login, password):
+    try:
+        current_datetime = datetime.now()
+        sql_query = f"INSERT INTO accounts (name, surname, username, password, email, registration_date, user_id) VALUES \
+                        ('{name}', '{surname}', '{login}', '{password}', '{email}', '{current_datetime}', '{generate_user_id()}')"
+        database_query(sql_query, "place", "none")
+        return True
+    except Exception as e:
+        print(e)
+        return False
+
+
+
+def checking_user(login: str) -> bool:
+    """Проверка на существование пользователей"""
+    sql_query = f"SELECT * FROM accounts WHERE username = '{login}'"
+    cursor = database_query(sql_query, "place", "return")
+    existing_entry = cursor.fetchone()
+    print(existing_entry)
+    if existing_entry:
+        return False    
+    return True

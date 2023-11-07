@@ -1,3 +1,5 @@
+from flask_login import LoginManager
+
 class UserLogin():
     def from_database(self, user_id, db):
         self.__user = None

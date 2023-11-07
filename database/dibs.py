@@ -41,3 +41,18 @@ def closing_database(cursor, connection):
     cursor.close()
     connection.close()
     print("Соеденение с PostgreSQL закрыто")
+
+
+def database_query(sql_query: str, users: str, types: str):
+    """Функция для запросов в базу данных"""
+    if users == "place":
+        connection, cursor = connected_database_place()
+    else:
+        connection, cursor = connected_database_main()
+
+    cursor.execute(sql_query)
+    
+    if types == "return":
+        return cursor
+    
+    closing_database(cursor=cursor, connection=connection)

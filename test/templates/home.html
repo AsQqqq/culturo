@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Flask Popup</title>
@@ -30,29 +30,30 @@
             cursor: pointer;
         }
     </style>
-</head>
-<body>
-    <button onclick="showPopup()">Show Popup</button>
-
-    <div id="popupContainer" class="popup-container"></div>
-
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
     <script>
-        var popups = [];
+        const socket = io();
 
-        function showPopup() {
+        socket.on('redirect', function(data) {
+            window.location.href = data.url;
+        });
+
+        function handleSubmit() {
+            var input = document.getElementById('inputField').value;
+            socket.emit('message', { message: input });
+        }
+
+        socket.on('notification', function(data) {
             var popupContainer = document.getElementById('popupContainer');
-
             var popup = document.createElement('div');
-            popup.className = 'popup';
-            popup.innerHTML = 'This is popup number';
-
+            popup.classList.add('popup');
+            popup.innerText = data.message;
             var closeBtn = document.createElement('span');
-            closeBtn.className = 'close';
-            closeBtn.innerHTML = '&times;';
-            closeBtn.onclick = function() {
-                closePopup(popup);  
-            };
-
+            closeBtn.classList.add('close');
+            closeBtn.innerHTML = '&#x2716;';
+            closeBtn.addEventListener('click', function() {
+                popup.remove();
+            });
             popup.appendChild(closeBtn);
             popupContainer.appendChild(popup);
 
@@ -62,14 +63,21 @@
                     closePopup(popup);
                 }, 15000);
             }, 100);
-        }
 
-        function closePopup(popup) {
+            function closePopup(popup) {
             popup.classList.remove('show');
             setTimeout(function() {
                 popup.parentNode.removeChild(popup);
             }, 300);
         }
+        });
     </script>
+</head>
+<body>
+    <div id="popupContainer" class="popup-container"></div>
+    <div>
+        <input type="text" id="inputField">
+        <button onclick="handleSubmit()">Submit</button>
+    </div>
 </body>
 </html>

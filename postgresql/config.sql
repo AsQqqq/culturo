@@ -19,7 +19,9 @@ CREATE TABLE IF NOT EXISTS accounts (
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
-    registration_date TIMESTAMP NOT NULL
+    registration_date TIMESTAMP NOT NULL,
+    save BOOLEAN DEFAULT FALSE,
+    user_id VARCHAR(255) NOT NULL
 );
 
 -- Создание таблицы 'places'
@@ -57,7 +59,7 @@ GRANT USAGE ON SCHEMA public TO culturopro;
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.accounts TO culturopro;
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.code TO culturopro;
 GRANT USAGE, SELECT ON SEQUENCE code_id_seq TO culturopro;
--- GRANT USAGE, SELECT ON SEQUENCE public.code TO culturopro;
+GRANT USAGE, SELECT ON SEQUENCE accounts_id_seq TO culturopro;
 
 -- Запрет доступа к другим таблицам
 REVOKE ALL PRIVILEGES ON TABLE public.places FROM culturopro;
