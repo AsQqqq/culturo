@@ -2,6 +2,7 @@ from psycopg2 import connect
 from psycopg2 import Error
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from decoding import get_database_main, get_database_place
+from flask_login import UserMixin
 
 def debugs():
     print(get_database_main())
@@ -56,3 +57,8 @@ def database_query(sql_query: str, users: str, types: str):
         return cursor
     
     closing_database(cursor=cursor, connection=connection)
+
+
+class User(UserMixin):
+    def __init__(self, user_id):
+        self.id = user_id

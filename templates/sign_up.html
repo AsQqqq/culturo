@@ -62,7 +62,7 @@
 						<input type="password" placeholder="Подтвердите пароль" class="form-control" name="confirm_password" onkeyup="validateRePassword()" required>
 						<i class="zmdi zmdi-lock"></i>
 					</div>
-					<button id="sign_up_button" disabled>Зарегистрироваться
+					<button id="sign_up_button" onclick="showPopup()">Зарегистрироваться
 						<i class="zmdi zmdi-arrow-right"></i>
 					</button>
 					<div class="switch_link">
@@ -73,4 +73,5 @@
 		</div>
 	</body>
 <script src="/static/script/validatorButtonSignUp.js"></script>
+<script src="/static/script/popupSignUp.js"></script>
 </html>

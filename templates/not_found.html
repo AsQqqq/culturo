@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .image {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: auto;
+        height: 100vh;
+        align-items: center;
+    }
+    
+    h1 {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+    <div class="image">
+        <img src="{{ url_for('static', filename='/images/monkey.gif') }}" alt="Monkey" width="300" height="300">
+        <h1>Упс...</h1>
+    </div>
+</body>
+</html>

@@ -4,7 +4,6 @@ function setDefaultColor (element) {
 }
 
 function setErrorColor (element) {
-  let button = document.getElementById("sign_up_button");
   element.style.color = "#a52a2a";
   element.style.borderColor = "#a52a2a";
 }
@@ -63,12 +62,8 @@ function validatePassword () {
   let passwordInput = document.getElementsByName("password")[0];
   let passwordValue = passwordInput.value;
   let passwordLength = passwordValue.length;
-
-  var reg = /[а-яА-ЯёЁ]/g;
-
-  if (passwordValue.search(reg) != -1) {
-    passwordValue = passwordValue.replace(reg, '');
-  }
+  let rePasswordInput = document.getElementsByName("confirm_password")[0];
+  let rePasswordValue = rePasswordInput.value
 
   if (passwordLength < 8) {
     setErrorColor(passwordInput);
@@ -83,12 +78,6 @@ function validateRePassword () {
   let rePasswordInput = document.getElementsByName("confirm_password")[0];
   let rePasswordValue = rePasswordInput.value
 
-  var reg = /[а-яА-ЯёЁ]/g; 
-
-  if (rePasswordValue.search(reg) != -1) {
-    rePasswordValue = rePasswordValue.replace(reg, '');
-  }
-
   if (rePasswordValue != passwordValue) {
     setErrorColor(rePasswordInput);
     setErrorColor(passwordInput);
@@ -98,3 +87,19 @@ function validateRePassword () {
   }
 }
 
+function filterPassword () {
+  let passwordValue = document.getElementsByName("password")[0].value;
+  if (passwordValue.search(reg) != -1) 
+    passwordValue = passwordValue.replace(reg, '');
+}
+
+function filterRePassword () {
+  let rePasswordValue = document.getElementsByName("confirm_password")[0].value;
+  if (rePasswordValue.search(reg) != -1) 
+    rePasswordValue = rePasswordValue.replace(reg, '');
+}
+
+let passwordInput = document.getElementsByName("password")[0];
+let rePasswordInput = document.getElementsByName("confirm_password")[0];
+passwordInput.addEventListener('input', filterPassword);
+rePasswordInput.addEventListener('input', filterRePassword);

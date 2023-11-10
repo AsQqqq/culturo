@@ -33,3 +33,4 @@ loginInput.addEventListener("input", checkConditions);
 emailInput.addEventListener("input", checkConditions);
 passwordInput.addEventListener("input", checkConditions);
 rePasswordInput.addEventListener("input", checkConditions);
+document.addEventListener("DOMContentLoaded", checkConditions);

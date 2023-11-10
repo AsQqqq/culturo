@@ -11,6 +11,7 @@ const checkConditions = () => {
         buttonSignIn.disabled = false;
         buttonSignIn.style.backgroundColor = "#333333";
         buttonSignIn.style.cursor = "pointer";
+        console.log('false')
     } else {
         buttonSignIn.disabled = true;
         buttonSignIn.style.backgroundColor = "#999999";
@@ -21,3 +22,4 @@ const checkConditions = () => {
 
 loginInput.addEventListener("input", checkConditions);
 passwordInput.addEventListener("input", checkConditions);
+document.addEventListener('DOMContentLoaded', checkConditions);

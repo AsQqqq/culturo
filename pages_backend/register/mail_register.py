@@ -1,11 +1,11 @@
-from flask import render_template, request
+from flask import render_template, request, redirect, url_for
 from flask_mail import Mail
 from database.dibs import database_query
 from pages_backend import app
 
 
-mail = 'danila.udodov.workmail@gmail.com'
-password_mail = 'rleu hrbi vtav dlsv'
+mail = 'culturo31@gmail.com'
+password_mail = 'yxfv xizy rmte xvtq'
 
 
 # Настройки для подключения к серверу почты
@@ -29,8 +29,8 @@ def confirm_email(code):
         code_nickname = code.split("-")[3]
         sql_query = f"UPDATE accounts SET save = True WHERE username = '{code_nickname}'"
         cursor = database_query(sql_query, "place", "none")
-        return render_template('index.html')
-    return "Пошёл от сюда вон!"
+        return redirect(url_for("index"))
+    return redirect(url_for('not_found'))
 
 
 @app.route('/validation_code/<email>')
