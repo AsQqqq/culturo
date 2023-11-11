@@ -4,30 +4,37 @@
         <meta charset="utf-8">
         <title>Культуро</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- <link rel="stylesheet" href="{{ url_for('static', filename='/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css') }}">
-		<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> -->
-        <link rel="stylesheet" href="/static/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
-        <link rel="stylesheet" href="/static/css/style.css">
-    </head>
-    <body>
+        <link rel="stylesheet" href="{{ url_for('static', filename='/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <script src="/static/script/closeMessage.js"></script>
+	</head>
+	<body>
+		{% with messages = get_flashed_messages() %}
+		{% if messages %}
+            <div id="popupContainer">
+                <div class="popup show">{{ messages[0] }}
+                    <span class="close" onclick="closePopup(this.parentElement)">&times;</span>
+                </div>
+            </div>
+        {% endif %}
+    	{% endwith %}
         <div class="wrapper" style="background-image: url(/static/images/background.jpg);">
             <div class="inner">
-                <form id="selectPlaceForm" action="" method="post">
+                <form id="selectPlaceForm" action="/process_form" method="post">
                     <h3>Укажите свои предпочтения</h3>
                     <div class="form-wrapper">
-                        <select class="form-control selectPlace" id="placeSelect" onchange="checkConditions()">
+                        <select class="form-control selectPlace" name="selected_location">
                             <option value="" disabled selected>Место проведения</option>
                             {% for item in items %}
-                                <option value="{{ item }}">{{ item }}</option>
+                                <option value="{{ item[0] }}">{{ item[0] }}</option>
                             {% endfor %}
                         </select>
                     </div>
-                    <button id="continueButton">Продолжить
+                    <button>Продолжить
 						<i class="zmdi zmdi-arrow-right"></i>
 					</button>
                 </form>
             </div>
         </div>
     </body>
-<script src="/static/script/preferencesPage.js"></script>
 </html>
