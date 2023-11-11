@@ -7,18 +7,7 @@
 		<link rel="stylesheet" href="{{ url_for('static', filename='/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css') }}">
 		<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 		<script src="/static/script/validatorSignUp.js"></script>
-		<script>
-			function closePopup(element) {
-				element.classList.remove("show");
-			}
-	
-			document.addEventListener("DOMContentLoaded", function() {
-				var popup = document.querySelector("#popupContainer .popup");
-				setTimeout(function() {
-					popup.classList.remove("show");
-				}, 15000);
-			});
-		</script>
+		<script src="/static/script/closeMessage.js"></script>
 	</head>
 	<body>
 		{% with messages = get_flashed_messages() %}

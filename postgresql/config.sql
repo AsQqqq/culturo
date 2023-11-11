@@ -1,17 +1,22 @@
--- Создание роли пользователя 'culturo'
-CREATE ROLE culturo WITH LOGIN PASSWORD 'PP5YGQQ1llKrHRKVFs';
+-- Создание роли 'culturopro', если она не существует
+DO $$ 
+BEGIN
+  IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'culturopro') THEN
+    CREATE ROLE culturopro WITH LOGIN PASSWORD 'EptGvfiHh1KVkpKS-Qkn';
+  END IF;
+END $$;
 
--- Создание базы данных 'culturo'
+-- Подключение к базе данных 'postgres' или другой существующей базе перед созданием новой базы данных
+\connect postgres;
+
+-- Создание базы данных 'culturo', если она не существует
 CREATE DATABASE culturo;
 
-GRANT CONNECT ON DATABASE culturo TO culturo;
-GRANT ALL PRIVILEGES ON DATABASE culturo TO culturo;
-ALTER ROLE culturo LOGIN;
+-- Подключение к базе данных 'culturo'
+\c culturo;
 
--- Изменение текущей базы данных на 'culturo'
-\connect culturo;
 
--- Создание таблицы 'accounts'
+-- Проверка существования таблицы 'accounts' и создание, если не существует
 CREATE TABLE IF NOT EXISTS accounts (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -21,21 +26,31 @@ CREATE TABLE IF NOT EXISTS accounts (
     email VARCHAR(255) NOT NULL,
     registration_date TIMESTAMP NOT NULL,
     save BOOLEAN DEFAULT FALSE,
+    tested BOOLEAN DEFAULT FALSE,
     user_id VARCHAR(255) NOT NULL
 );
 
--- Создание таблицы 'places'
+-- Проверка существования таблицы 'places' и создание, если не существует
 CREATE TABLE IF NOT EXISTS places (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    photo_path VARCHAR(255) NOT NULL,
+    name_photo VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
-    hours_of_operation TEXT NOT NULL,
-    contact_phone VARCHAR(20) NOT NULL,
-    location POINT
+    hours_of_operation_start TEXT,
+    hours_of_operation_end TEXT,
+    contact_phone VARCHAR(20),
+    email VARCHAR(255),
+    date_open VARCHAR(255),
+    common_location VARCHAR(255),
+    location VARCHAR(255),
+    site VARCHAR(255),
+    break_time_start VARCHAR(255),
+    break_time_end VARCHAR(255),
+    estimation DOUBLE PRECISION DEFAULT (5),
+    id_point VARCHAR(255) NOT NULL
 );
 
--- Создание таблицы 'code'
+-- Проверка существования таблицы 'code' и создание, если не существует
 CREATE TABLE IF NOT EXISTS code (
     id SERIAL PRIMARY KEY,
     code VARCHAR(255) NOT NULL,
@@ -43,29 +58,14 @@ CREATE TABLE IF NOT EXISTS code (
     activate BOOLEAN DEFAULT TRUE
 );
 
+-- Предоставление прав доступа к таблице 'accounts' для роли 'culturopro'
+GRANT ALL PRIVILEGES ON TABLE accounts TO culturopro;
 
-REVOKE ALL PRIVILEGES ON TABLE public.accounts FROM cuturo; -- Запрещаем всё в accounts
-REVOKE ALL PRIVILEGES ON TABLE public.code FROM cuturo; -- Запрещаем всё в code
-GRANT SELECT ON TABLE public.places TO culturo; -- Разрешаем только читать данные из places
+-- Предоставление прав доступа к таблице 'places' для роли 'culturopro'
+GRANT ALL PRIVILEGES ON TABLE places TO culturopro;
 
--- Создание роли пользователя 'culturopro'
-CREATE ROLE culturopro WITH LOGIN PASSWORD 'EptGvfiHh1KVkpKS-Qkn';
+-- Предоставление прав доступа к таблице 'code' для роли 'culturopro'
+GRANT ALL PRIVILEGES ON TABLE code TO culturopro;
 
--- Добавление прав доступа к базе данных 'culturo'
-GRANT CONNECT ON DATABASE culturo TO culturopro;
-GRANT USAGE ON SCHEMA public TO culturopro;
-
--- Добавление прав доступа к таблице 'places'
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.accounts TO culturopro;
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.code TO culturopro;
-GRANT USAGE, SELECT ON SEQUENCE code_id_seq TO culturopro;
-GRANT USAGE, SELECT ON SEQUENCE accounts_id_seq TO culturopro;
-
--- Запрет доступа к другим таблицам
-REVOKE ALL PRIVILEGES ON TABLE public.places FROM culturopro;
-
--- Изменение текущей базы данных на 'culturo'
-\connect culturo;
-
--- Подключение роли 'culturopro' к текущей сессии
-SET ROLE culturopro;
+-- Предоставление прав доступа к всем последовательностям в схеме public для роли 'culturopro'
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO culturopro

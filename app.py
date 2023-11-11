@@ -13,10 +13,6 @@ host = "192.168.0.104"
 port = 5500
 domain = f"http://{host}:{port}"
 
-@app.before_request
-def before_request():
-    print("Пре запрос")
-
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -25,6 +21,4 @@ def load_user(user_id):
 
 if __name__ == "__main__":
     "Запуск кода"
-    # generate_verification_code(login="asq")
-    # app.run(debug=True, host=host, port=port, ssl_context='adhoc')
-    app.run(debug=True, host=host, port=port)
+    app.run(debug=False, host=host, port=port)

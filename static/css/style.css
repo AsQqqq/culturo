@@ -408,3 +408,17 @@ button {
   font-size: 20px;
   color: #999;
 }
+
+
+#selectPlaceForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 70vw;
+}
+
+.selectPlace {
+  width: 20vw;
+  text-align: center;
+}

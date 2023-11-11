@@ -4,28 +4,33 @@ from .database_login import checking_user
 from database.sqlAlchemy import User
 from flask_login import login_user
 from flask_login import current_user
+import main_index
 
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login() -> str: 
-    if current_user.is_authenticated:
-        return redirect(url_for("index"))
-    
-    if request.method == "POST":
-        login = request.form.get('login')
-        password = request.form.get('password')
+    try:
+        if current_user.is_authenticated:
+            return redirect(url_for((main_index.testing)))
+        
+        if request.method == "POST":
+            login = request.form.get('login')
+            password = request.form.get('password')
 
-        if checking_user(login=login, password=password) == False:
-            flash("Такого пользователя не существует. Пожалуйста, проверьте введенные данные и попробуйте снова.", "error")
+            if checking_user(login=login, password=password) == False:
+                flash("Такого пользователя не существует. Пожалуйста, проверьте введенные данные и попробуйте снова.", "error")
+                return render_template('sign_in.html')
+
+
+            user = User.query.filter_by(username=login).first()
+            login_user(user)
+            return redirect(url_for((main_index.testing)))
+        
+        elif request.method == "GET":
             return render_template('sign_in.html')
-
-        user = User.query.filter_by(username=login).first()
-        login_user(user)
-        flash("Ура.", "success")
-        return render_template('validation_code.html')
-    
-    elif request.method == "GET":
+    except Exception as e:
+        flash("Произошла внутренняя ошибка сервера. Обратитесь к администратору.", "error")
         return render_template('sign_in.html')
         
 
