@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Подтверждение электронной почты</title>
+</head>
+<body>
+    <h1>Подтверждение электронной почты</h1>
+    <p>Для подтверждения вашей электронной почты, нажмите на кнопку ниже:</p>
+    <a href="http://192.168.0.104:5500{{ url_for('confirm_email', code=token) }}" style="padding: 10px 20px; background-color: #3498db; color: #fff; text-decoration: none;">Подтвердить электронную почту</a>
+</body>
+</html>

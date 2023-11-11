@@ -1,16 +1,80 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <!--  css link -->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
-    <!-- other -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<html>
+    <head>
+        <meta charset="utf-8">
+		<title>Культуро</title>
+		<meta name="viewport" content="width=device-width">
+		<link rel="stylesheet" href="{{ url_for('static', filename='/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <script src="/static/script/closeMessage.js"></script>
+    </head>
     <body>
-        <a href="/about">
-            <h1 class="index">index.html</h1>
-        </a>
+        {% with messages = get_flashed_messages() %}
+		{% if messages %}
+            <div id="popupContainer">
+                <div class="popup show">{{ messages[0] }}
+                    <span class="close" onclick="closePopup(this.parentElement)">&times;</span>
+                </div>
+            </div>
+        {% endif %}
+    	{% endwith %}
+        <div class="parent">
+            <div class="head-block">
+                <div class="logo-holder">
+                    <img src="{{ url_for('static', filename='/images/logo.png') }}">
+                </div>
+                <div class="navigation-block">
+                    <a href="#" onclick="switchContentMain()" id="mainLink">Главная</a>
+                    <a href="#" onclick="switchContentAbout()" id="aboutLink">Что это?</a>
+                    <a href="#" onclick="switchContentDevelopers()" id="developersLink">Создатели</a>
+                </div>
+            </div>
+            <div class="main-block" id="main-block">
+                <div class="mainSquare">
+                    <h2>Твой личный проводник в культуру.</h2>
+                    <form action="/register" method="GET">
+                        <button class="promo-button">Попробовать
+                            <i class="zmdi zmdi-arrow-right"></i>
+                        </button>
+                    </form>
+                    <div class="switch_link">
+						<a href="/login">Уже есть аккаунт?</a>
+					</div>
+                </div>
+            </div>
+            <div class="about-block" id="about-block">
+                <div class="aboutSquare">
+                    <h2>Культуро - это не просто сайт.</h2>
+                    <h6>Это в первую очередь источник вдохновения.<br>
+                        Укажите ваши предпочтения, и сайт автоматически
+                        подберет культурные места.<br> При желании, вы всегда
+                        можете изменить предпочтения.
+                    </h6>
+                </div>
+            </div>
+            <div class="developers-block" id="developers-block">
+                <div class="developersSquare">
+                    <div class="frontendDeveloper">
+                        <img src="{{ url_for('static', filename='images/serafim.png') }}">
+                        <h3>Frontend</h3>
+                        <h2>Перекалин</h2>
+                        <h2>Серафим</h2>
+                    </div>
+                    <div class="backendDeveloper">
+                        <img src="{{ url_for('static', filename='images/danila.png') }}">
+                        <h3>Backend</h3>
+                        <h2>Удодов</h2>
+                        <h2>Данила</h2>
+                    </div>
+                    <div class="analytistDeveloper">
+                        <img src="{{ url_for('static', filename='images/alexandr.png') }}">
+                        <h3>Analytist</h3>
+                        <h2>Александр</h2>
+                        <h2>Захаров</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
+    <script src="/static/script/promoPage.js"></script>
 </html>
