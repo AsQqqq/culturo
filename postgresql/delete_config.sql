@@ -9,10 +9,18 @@ BEGIN
     -- Завершаем все подключения к базе данных
     EXECUTE 'SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = ''culturo''';
   END IF;
+
+  SELECT EXISTS (SELECT 1 FROM pg_database WHERE datname = 'culturoplace') INTO db_exists;
+
+  IF db_exists THEN
+    -- Завершаем все подключения к базе данных
+    EXECUTE 'SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = ''culturoplace''';
+  END IF;
 END $$;
 
 -- Выполняем DROP DATABASE
 DROP DATABASE IF EXISTS culturo;
+DROP DATABASE IF EXISTS culturoplace;
 
 -- Удаление роли, если она существует
 DO $$ 

@@ -451,6 +451,7 @@ button {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.6);
+  transition: background-color 2s ease;
 }
 
 img {
@@ -482,7 +483,28 @@ img {
   margin: 0 auto;
 }
 
-.card h4 {
+.card {
+  height: 70vh;
+  width: 400px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+}
+
+.infoHolder {
+  background-color: rgba(255, 255, 255, 0.8);
+  width: 100%;
+  height: 40%;
+  /* padding: 3% 0 0 0; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.innerInfoCard h4 {
   text-align: center;
   font-weight: bold;
   font-family: Arial, Helvetica, sans-serif;
@@ -490,12 +512,35 @@ img {
   text-align: center;
 }
 
-.card p {
-  text-align: center;
+.innerDescriptionCard p {
+  text-align: justify;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: lighter;
   font-size: 12px;
   max-width: 20vw;
+}
+
+.rating {
+  font-size: 24px;
+  unicode-bidi: bidi-override;
+}
+
+.rating > span {
+  display: inline-block;
+  position: relative;
+  width: 1.5em;
+}
+
+/* .rating > span:hover:before,
+.rating > span:hover ~ span:before {
+  content: '\2605';
+  color: gold;
+  position: absolute;
+} */
+
+.rating > span:before {
+  content: '\2606'; /* Пустая звезда с кодом Unicode */
+  position: absolute;
 }
 
 .hidden {
@@ -528,4 +573,92 @@ img {
 
 #confirm-icon {
   z-index: 2;
+}
+
+.parent-customHeader {
+  display: flex;
+}
+
+.backLink {
+  width: 5%;
+}
+
+.backLink a {
+  font-size: 25px;
+  text-decoration: none;
+  color: #333;
+}
+
+.customHeader {
+  width: 95%;
+  justify-content: left;
+  margin-right: 5%;
+}
+
+.parentPreferences {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.headPreferences {
+  background-color: #D3D7DC;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 110px;
+  padding: 0px 20px 0px 20px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 400px) {
+  .headPreferences {
+    justify-content: center;
+  }
+
+}
+
+.userInfoPreferences {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.userInfoPreferences img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+  margin-left: 10px;
+}
+
+.preferencesBlock {
+  display: flex;
+  flex-grow: 1;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.dropdownPreferences {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 20px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  top: 17%;
+  margin-left: 10px;
+}
+
+.dropdownPreferences a {
+  color: #333;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 10px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdownPreferences a:hover {
+  background-color: #f1f1f1;
 }

@@ -33,16 +33,6 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(255), nullable=False)
     registration_date = db.Column(db.DateTime, nullable=False)
     save = db.Column(db.Boolean, default=False)
+    tested = db.Column(db.Boolean, default=False)
+    common_location = db.Column(db.String(255), nullable=False)
     user_id = db.Column(db.String(255), nullable=False)
-
-class Place(db.Model): 
-    __table_args__ = {'schema': 'public', 'extend_existing': True}
-    __tablename__ = 'places'
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255), nullable=False)
-    photo_path = db.Column(db.String(255), nullable=False)
-    description = db.Column(db.Text, nullable=False)
-    hours_of_operation = db.Column(db.Text, nullable=False)
-    contact_phone = db.Column(db.String(20), nullable=False)
-    location = db.Column(Point)

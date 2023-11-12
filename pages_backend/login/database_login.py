@@ -1,5 +1,6 @@
 from database.dibs import database_query
 from werkzeug.security import check_password_hash
+from database import database_query_user_place
 
 
 

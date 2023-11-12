@@ -13,8 +13,7 @@ END $$;
 CREATE DATABASE culturo;
 
 -- Подключение к базе данных 'culturo'
-\c culturo;
-
+\connect culturo;
 
 -- Проверка существования таблицы 'accounts' и создание, если не существует
 CREATE TABLE IF NOT EXISTS accounts (
@@ -27,6 +26,7 @@ CREATE TABLE IF NOT EXISTS accounts (
     registration_date TIMESTAMP NOT NULL,
     save BOOLEAN DEFAULT FALSE,
     tested BOOLEAN DEFAULT FALSE,
+    common_location VARCHAR(255), 
     user_id VARCHAR(255) NOT NULL
 );
 
@@ -68,4 +68,10 @@ GRANT ALL PRIVILEGES ON TABLE places TO culturopro;
 GRANT ALL PRIVILEGES ON TABLE code TO culturopro;
 
 -- Предоставление прав доступа к всем последовательностям в схеме public для роли 'culturopro'
-GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO culturopro
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO culturopro;
+
+-- Подключение к базе данных 'postgres' или другой существующей базе перед созданием новой базы данных
+\connect postgres;
+
+-- Создание базы данных 'culturoplace', если она не существует
+CREATE DATABASE culturoplace;

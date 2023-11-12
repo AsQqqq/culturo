@@ -3,19 +3,16 @@ var startX, startY;
 
 // Функция для выполнения запроса к серверу и обновления данных на странице
 function updateData() {
-    // Выполните AJAX-запрос к серверу для получения данных
+    // AJAX-запрос к серверу для получения данных
     fetch('/get_data')
         .then(response => response.json())
         .then(data => {
-            // Очистите текущие данные на странице
-            document.getElementById('data-list').innerHTML = '';
-
-            // Обновите данные на странице
-            data.forEach(record => {
-                const listItem = document.createElement('li');
-                listItem.textContent = record.field_name;  // Замените на соответствующее поле
-                document.getElementById('data-list').appendChild(listItem);
-            });
+            var swipeCard = document.getElementById('card');
+            swipeCard.style.backgroundImage = `url(/static/images/cards/${data[0]})`;
+            var header = document.getElementById('innerInfoCard');
+            header.innerHTML = data[1];
+            var description = document.getElementById('innerDescriptionCard');
+            description.innerHTML = data[2];
         });
 }
 
@@ -27,6 +24,7 @@ function sendConfirmResult() {
         },
         body: JSON.stringify('confirm'),
     })
+    updateData();
 }
 
 function sendTrashResult() {
@@ -37,57 +35,65 @@ function sendTrashResult() {
         },
         body: JSON.stringify('trash'),
     })
+    updateData();
 }
-
 // Вызовите функцию обновления данных при загрузке страницы
 updateData();
 
-// Установите интервал для выполнения функции обновления каждую секунду
-setInterval(updateData, 10000);
-
+// Затемнение фона
 function darkenMainBlock() {
     var imageContainer = document.getElementById("main-block");
     imageContainer.classList.toggle("darken");
 }
 
+// Возврат фона в исходную палитру
 function unDarkenMainBlock() {
     var imageContainer = document.getElementById("main-block");
     imageContainer.classList.remove("darken");
     swipeElement.addEventListener("touchend", unDarkenMainBlock);
 }
 
+var swipeContainer = document.getElementById('swipe-container');
+var hammer = new Hammer(swipeContainer);
+
+hammer.on('swipeleft', function() {
+    sendTrashResult();
+});
+
+hammer.on('swiperight', function() {
+    sendConfirmResult();
+});
+
 // Проверяем, является ли устройство мобильным
 var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
 if (isMobile) {
-    // Если мобильное устройство, используем touch события
     swipeElement.addEventListener("touchstart", darkenMainBlock);
     swipeElement.addEventListener("touchend", unDarkenMainBlock);
 } else {
-    // Если не мобильное устройство, используем mouse события
     swipeElement.addEventListener('mousedown', function (e) {
         darkenMainBlock();
-        // Запоминаем начальные координаты при нажатии
-        startX = e.clientX;
-        startY = e.clientY;
+
         var leftElement = document.getElementById('trash-icon');
         var rightElement = document.getElementById('confirm-icon');
-
-        // Добавляем/удаляем классы для запуска анимации
         leftElement.classList.toggle('hidden');
         leftElement.classList.toggle('trash-icon');
 
         rightElement.classList.toggle('hidden');
         rightElement.classList.toggle('confirm-icon');
+
+        // Запоминаем начальные координаты при нажатии
+        startX = e.clientX;
+        startY = e.clientY;
     });
 
     swipeElement.addEventListener('mouseup', function (e) {
         // Вычисляем разницу между начальными и конечными координатами
         unDarkenMainBlock();
+
         var leftElement = document.getElementById('trash-icon');
         var rightElement = document.getElementById('confirm-icon');
 
-        // Добавляем/удаляем классы для запуска анимации
         leftElement.classList.toggle('hidden');
         leftElement.classList.toggle('trash-icon');
 
@@ -109,7 +115,7 @@ if (isMobile) {
             }
         } else {
             // Вертикальный свайп (здесь вы можете добавить необходимые действия или игнорировать)
-            console.log('Вертикальный свайп');
+            console.log('Нужный свайп не произошел');
         }
     });
 }
