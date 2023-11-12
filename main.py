@@ -1,41 +1,34 @@
-from flask import Flask, render_template, jsonify
-from flask_socketio import SocketIO
+from flask import render_template, flash, jsonify, request
+from pages_backend import app
 
-app = Flask(__name__)
-socketio = SocketIO(app)
 
-# Эндпоинт для получения данных из PostgreSQL
-@app.route('/get_data', methods=['GET'])
+
+@app.route('/', methods=['GET'])
+def index() -> render_template:
+    return render_template('test.html')
+
+@app.route('/get_data', methods=['GET', 'POST'])
 def get_data():
-    # Здесь выполните запрос к PostgreSQL и получите данные
-    # Возвращайте данные в формате JSON
-    data = fetch_data_from_postgresql()
-    return jsonify(data)
-
-# Эндпоинт для добавления новых данных
-@app.route('/add_data', methods=['POST'])
-def add_data():
-    # Здесь обработайте новые данные и отправьте сообщение по WebSocket
-    socketio.emit('update_data', namespace='/socket')
-    return jsonify({'success': True})
-
-
-@app.route('/confirmCard', methods=['POST'])
-def confirm_swipe():
-    return 'Понравилось!'
-
-
-@app.route('/trashCard', methods=['POST'])
-def trash_swipe():
-    return 'Не понравилось!'
-
-
-@app.route("/", methods=['GET', 'POST'])
-def index():
-    return render_template("main.html")
+    if request.method == "POST":
+        data_pages = request.get_json()
+        data = fetch_data_from_postgresql()
+        if data_pages == 'confirm':
+            result = "confirm_result"
+        elif data_pages == 'trash':
+            # Обработка данных для 'trash'
+            result = "trash_result"
+        else:   
+            # Обработка других случаев
+            result = "ERROR"
+        print(f"\n\n{result}\n\n")
+        return jsonify(data)
+    elif request.method == "GET":
+        data = fetch_data_from_postgresql()
+        return jsonify(data)
 
 def fetch_data_from_postgresql():
     return ['123', '321', 'saddf', 'hfgjihgdf']
 
-if __name__ == '__main__':
-    socketio.run(app, debug=True)
+
+def upload_index():
+    return True
