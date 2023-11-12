@@ -1,23 +1,41 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
+from flask_socketio import SocketIO
 
 app = Flask(__name__)
+socketio = SocketIO(app)
+
+# Эндпоинт для получения данных из PostgreSQL
+@app.route('/get_data', methods=['GET'])
+def get_data():
+    # Здесь выполните запрос к PostgreSQL и получите данные
+    # Возвращайте данные в формате JSON
+    data = fetch_data_from_postgresql()
+    return jsonify(data)
+
+# Эндпоинт для добавления новых данных
+@app.route('/add_data', methods=['POST'])
+def add_data():
+    # Здесь обработайте новые данные и отправьте сообщение по WebSocket
+    socketio.emit('update_data', namespace='/socket')
+    return jsonify({'success': True})
 
 
-@app.route('/', methods=["GET"])
-def promo():
-    return render_template("index.html")
+@app.route('/confirmCard', methods=['POST'])
+def confirm_swipe():
+    return 'Понравилось!'
 
-@app.route('/sign_up', methods=["GET"])
-def sign_up():
-    return render_template("sign_up.html")
 
-@app.route('/sign_in', methods=["GET"])
-def sign_in():
-    return render_template("sign_in.html")
+@app.route('/trashCard', methods=['POST'])
+def trash_swipe():
+    return 'Не понравилось!'
 
-@app.route('/email_confirmation', methods=["GET"])
-def email_confirmation():
-    return render_template("email_confirmation")
 
-if __name__ == "__main__":
-    app.run(debug=True, host="localhost", port=5500)
+@app.route("/", methods=['GET', 'POST'])
+def index():
+    return render_template("main.html")
+
+def fetch_data_from_postgresql():
+    return ['123', '321', 'saddf', 'hfgjihgdf']
+
+if __name__ == '__main__':
+    socketio.run(app, debug=True)
