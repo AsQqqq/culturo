@@ -1,12 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="icon" href="/static/images/icon_pages.png" type="image/x-icon">
-</head>
-<body>
-    Здесь реки
-</body>
+<html>
+    <head>
+        <meta charset="utf-8">
+		<title>Культуро</title>
+		<meta name="viewport" content="width=device-width">
+		<link rel="stylesheet" href="{{ url_for('static', filename='/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <link rel="icon" href="/static/images/icon_pages.png" type="image/x-icon">
+    </head>
+    <body>
+        <div class="parent">
+            <div class="head-block">
+                <div class="logo-holder">
+                    <!-- <img src="/static/images/logo.png"> -->
+                    <img src="{{ url_for('static', filename='/images/logo.png') }}">
+                </div>
+                <div class="navigation-block">
+                    <a>Главная</a>
+                    <a>Места</a>
+                    <a>Профиль</a>
+                    <a href="/logout">Выход</a>
+                </div>
+            </div>
+            <div class="main-block main-page" id="main-block">
+                <div id="trash-icon" class="hidden trash-icon">
+                    <!-- <img height="40px" width="40px" src="/static/images/bin.png"> -->
+                    <img height="40px" width="40px" src="{{ url_for('static', filename='/images/bin.png') }}">
+                </div>
+                <div id="swipe-container">
+                    <div class="card">
+                        <!-- <img src="/static/images/login-form-sign-in.jpg"> -->
+                        <img src="{{ url_for('static', filename='/images/confirm.png') }}"
+                        <h4>Дом культуры "Горняк"</h4>
+                        <p>loremru66</p>
+                        <ul id="data-list"></ul>
+                    </div>
+                </div>
+                <div id="confirm-icon" class="hidden confirm-icon">
+                    <!-- <img height="40px" width="40px" src="/static/images/confirm.png"> -->
+                    <img height="40px" width="40px" src="{{ url_for('static', filename='/images/bin.png') }}">
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+    <script src="/static/script/mainPage.js"></script>
+    <script>
+        var swipeContainer = document.getElementById('swipe-container');
+        var hammer = new Hammer(swipeContainer);
+
+        hammer.on('swipeleft', function() {
+            console.log('Swipe left!');
+            sendTrashResult();
+        });
+        
+        hammer.on('swiperight', function() {
+            console.log('Swipe right!');
+            sendConfirmResult();
+        });
+    </script>
 </html>

@@ -246,11 +246,10 @@ button {
   flex-direction: column;
   align-content: center;
   align-items: center;
-  height: 110px; 
+  height: 110px;
 }
 
 .logo-holder {
-  /* margin-bottom: 1%; */
   margin-top: 1%;
 }
 
@@ -397,7 +396,7 @@ button {
 
 .popup {
   background-color: #fff;
-  padding: 20px;
+  padding: 15px;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -431,4 +430,102 @@ button {
 .selectPlace {
   width: 20vw;
   text-align: center;
+}
+
+.main-block.main-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  background-image: url(/static/images/background.jpg);
+  background-size: cover;
+  flex-grow: 1;
+  z-index: 1;
+}
+
+.main-block.darken::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+img {
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+}
+
+#swipe-container {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  overflow: hidden;
+  height: auto;
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  border: 1px solid;
+  z-index: 2;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+#swipe-container img {
+  width: 100%;
+  height: 55vh;
+  display: block;
+  margin: 0 auto;
+}
+
+.card h4 {
+  text-align: center;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  text-align: center;
+}
+
+.card p {
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: lighter;
+  font-size: 12px;
+  max-width: 20vw;
+}
+
+.hidden {
+  opacity: 0;
+  transform: translateX(0);
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+.tilted-left {
+  transform: skewX(-20deg);
+  transition: transform 0.3s ease;
+}
+
+.tilted-right {
+  transform: skewX(-20deg);
+  transition: transform 0.3s ease;
+}
+
+.trash-icon {
+  transform: translateX(-100%);
+}
+
+.confirm-icon {
+  transform: translateX(100%);
+}
+
+#trash-icon {
+  z-index: 2;
+}
+
+#confirm-icon {
+  z-index: 2;
 }
