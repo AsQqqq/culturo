@@ -58,6 +58,11 @@ operable program or batch file.
 
 
 
+---
+
+[![Picture](https://github.com/AsQqqq/culturo/blob/master/GitAssets/image/er3.png?raw=true)](#ошибки)
+
+
 ### Ошибка команды python venv
 
 При выполнении команды `python3 -m venv .venv` возникает ошибка с сообщением:
