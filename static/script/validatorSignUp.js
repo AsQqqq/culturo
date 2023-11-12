@@ -1,17 +1,19 @@
-function setDefaultColor (element) {
+var reg = /[а-яА-ЯёЁ]/g;
+
+function setDefaultColor(element) {
   element.style.color = "#333333";
   element.style.borderColor = "#333333";
 }
 
-function setErrorColor (element) {
+function setErrorColor(element) {
   element.style.color = "#a52a2a";
   element.style.borderColor = "#a52a2a";
 }
 
-function validateName () {
+function validateName() {
   let nameInput = document.getElementsByName("name")[0];
   let nameValue = nameInput.value;
-  
+
   if (nameValue.length > 1) {
     setDefaultColor(nameInput);
   } else {
@@ -19,10 +21,10 @@ function validateName () {
   }
 }
 
-function validateSurname () {
+function validateSurname() {
   let surnameInput = document.getElementsByName("surname")[0];
   let surnameValue = surnameInput.value;
-  
+
   if (surnameValue.length > 1) {
     setDefaultColor(surnameInput);
   } else {
@@ -30,15 +32,14 @@ function validateSurname () {
   }
 }
 
-function validateLogin () {
+function validateLogin() {
   let loginInput = document.getElementsByName("login")[0];
   let loginValue = loginInput.value;
 
-  var reg = /[а-яА-ЯёЁ]/g; 
-  if (loginInput.value.search(reg) != -1) {
-    loginInput.value = loginInput.value.replace(reg, '');
+  if (loginValue.search(reg) != -1) {
+    loginInput.value = loginValue.replace(reg, '');
   }
-  
+
   if (loginValue.length >= 2) {
     setDefaultColor(loginInput);
   } else {
@@ -46,7 +47,7 @@ function validateLogin () {
   }
 }
 
-function validateEmail () {
+function validateEmail() {
   let emailInput = document.getElementsByName("email")[0];
   let emailValue = emailInput.value;
   var count = (emailValue.match(/@/g) || []).length;
@@ -58,12 +59,12 @@ function validateEmail () {
   }
 }
 
-function validatePassword () {
+function validatePassword() {
   let passwordInput = document.getElementsByName("password")[0];
   let passwordValue = passwordInput.value;
   let passwordLength = passwordValue.length;
   let rePasswordInput = document.getElementsByName("confirm_password")[0];
-  let rePasswordValue = rePasswordInput.value
+  let rePasswordValue = rePasswordInput.value;
 
   if (passwordLength < 8) {
     setErrorColor(passwordInput);
@@ -72,11 +73,11 @@ function validatePassword () {
   }
 }
 
-function validateRePassword () {
+function validateRePassword() {
   let passwordInput = document.getElementsByName("password")[0];
   let passwordValue = passwordInput.value;
   let rePasswordInput = document.getElementsByName("confirm_password")[0];
-  let rePasswordValue = rePasswordInput.value
+  let rePasswordValue = rePasswordInput.value;
 
   if (rePasswordValue != passwordValue) {
     setErrorColor(rePasswordInput);
@@ -87,13 +88,13 @@ function validateRePassword () {
   }
 }
 
-function filterPassword () {
+function filterPassword() {
   let passwordValue = document.getElementsByName("password")[0].value;
   if (passwordValue.search(reg) != -1) 
     passwordValue = passwordValue.replace(reg, '');
 }
 
-function filterRePassword () {
+function filterRePassword() {
   let rePasswordValue = document.getElementsByName("confirm_password")[0].value;
   if (rePasswordValue.search(reg) != -1) 
     rePasswordValue = rePasswordValue.replace(reg, '');
