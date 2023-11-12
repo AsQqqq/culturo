@@ -6,6 +6,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="{{ url_for('static', filename='/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css') }}">
 		<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+		<!-- <link rel="stylesheet" href="/static/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+		<link rel="stylesheet" href="/static/css/style.css"> -->
 		<script src="/static/script/validatorSignIn.js"></script>
 		<script src="/static/script/closeMessage.js"></script>
 	</head>
@@ -23,9 +25,17 @@
 			<div class="inner">
 				<div class="image-holder">
 					<img src="{{ url_for('static', filename='images/login-form-sign-in.jpg') }}" alt="Image">
+					<!-- <img src="/static/images/login-form-sign-up.jpg"> -->
 				</div>
 				<form id="sign_in_form" action="" method="post">
-                    <h3>Вход</h3>
+					<div class="parent-customHeader">
+						<div class="backLink">
+							<a href="/"><</a>
+						</div>
+						<div class="customHeader">
+							<h3>Вход</h3>
+						</div>
+					</div>
                     <div class="form-wrapper">
 						<!-- 20 символов логин -->
                         <input type="text" placeholder="Имя пользователя" name="login" onkeyup="validateLogin()" class="form-control">

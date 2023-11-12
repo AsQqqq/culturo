@@ -529,3 +529,24 @@ img {
 #confirm-icon {
   z-index: 2;
 }
+
+.parent-customHeader {
+  display: flex;
+}
+
+.backLink {
+  width: 5%;
+}
+
+.backLink a {
+  font-size: 25px;
+  text-decoration: none;
+  color: #333;
+}
+
+.customHeader {
+  width: 95%;
+  justify-content: left;
+  margin-right: 5%;
+}
+
