@@ -4,10 +4,10 @@
         <meta charset="utf-8">
         <title>Культуро</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- <link rel="stylesheet" href="{{ url_for('static', filename='/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css') }}">
-		<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> -->
-        <link rel="stylesheet" href="/static/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
-        <link rel="stylesheet" href="/static/css/style.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <!-- <link rel="stylesheet" href="/static/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+        <link rel="stylesheet" href="/static/css/style.css"> -->
         <script src="/static/script/closeMessage.js"></script>
 	</head>
 	<body>
@@ -25,14 +25,14 @@
                 <form id="selectPlaceForm" action="/process_form" method="post">
                     <h3>Укажите свои предпочтения</h3>
                     <div class="form-wrapper">
-                        <select class="form-control selectPlace" name="selected_location" onchange="checkConditions()">
+                        <select id="placeSelect" class="form-control selectPlace" name="selected_location" onchange="checkConditions()">
                             <option value="" disabled selected>Место проведения</option>
                             {% for item in items %}
                                 <option value="{{ item[0] }}">{{ item[0] }}</option>
                             {% endfor %}
                         </select>
                     </div>
-                    <button>Продолжить
+                    <button id="continueButton">Продолжить
 						<i class="zmdi zmdi-arrow-right"></i>
 					</button>
                 </form>
