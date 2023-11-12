@@ -11,3 +11,8 @@ def get_database_place() -> tuple:
     DATABASE = environ["DATABASE"]
     return DATABASE_LOGIN_PLACE, DATABASE_URL, \
             DATABASE_PASSWORD_PLACE, DATABASE_PORT, DATABASE
+
+def get_ipport():
+    IP = environ["IP"]
+    PORT = environ["PORT"]
+    return IP, PORT

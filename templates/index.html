@@ -7,6 +7,7 @@
 		<link rel="stylesheet" href="{{ url_for('static', filename='/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css') }}">
 		<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
         <script src="/static/script/closeMessage.js"></script>
+        <link rel="icon" href="/static/images/icon_pages.png" type="image/x-icon">
     </head>
     <body>
         {% with messages = get_flashed_messages() %}
@@ -21,7 +22,9 @@
         <div class="parent">
             <div class="head-block">
                 <div class="logo-holder">
-                    <img src="{{ url_for('static', filename='/images/logo.png') }}">
+                    <a href="/">
+                        <img src="{{ url_for('static', filename='/images/logo.png') }}">
+                    </a>
                 </div>
                 <div class="navigation-block">
                     <a href="#" onclick="switchContentMain()" id="mainLink">Главная</a>

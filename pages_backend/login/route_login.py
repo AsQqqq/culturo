@@ -7,7 +7,6 @@ from flask_login import current_user
 import main_index
 
 
-
 @app.route('/login', methods=['GET', 'POST'])
 def login() -> str: 
     try:

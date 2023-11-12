@@ -1,16 +1,13 @@
 from pages_backend.reg import (
-    route_index,
-    route_register,
-    route_login,
-    logout_login,
-    route_not_found
+    route_index
 )
 from register import app, login_manager
 from database.sqlAlchemy import User
+from decoding import get_ipport
 
 
-host = "192.168.0.104"
-port = 5500
+host = get_ipport()[0]
+port = get_ipport()[1]
 domain = f"http://{host}:{port}"
 
 

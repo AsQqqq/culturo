@@ -1,11 +1,7 @@
-from flask import redirect, url_for
-from flask_login import current_user
-from functools import wraps
+from database.dibs import database_query
 
-def anonymous_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if current_user.is_authenticated:
-            return redirect(url_for('index'))
-        return f(*args, **kwargs)
-    return decorated_function
+def get_testing(user_id: str):
+    sql_query = f"SELECT tested FROM accounts WHERE user_id = '{user_id}'"
+    cursror = database_query(sql_query=sql_query, types="return")
+    result = cursror.fetchone()
+    return result[0]

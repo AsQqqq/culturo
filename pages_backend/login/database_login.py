@@ -20,4 +20,3 @@ def checking_user(login: str, password: str) -> bool:
     print(existing_entry)
 
     return True
-
