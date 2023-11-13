@@ -18,3 +18,24 @@ const disableButton = () => {
 
 
 document.addEventListener("DOMContentLoaded", disableButton);
+
+document.addEventListener('DOMContentLoaded', function() {
+    const links = document.querySelectorAll('.userNamePreferences');
+
+    links.forEach(function(link) {
+      link.addEventListener('click', function() {
+        const dropdown = this.nextElementSibling;
+        dropdown.style.display = (dropdown.style.display === 'block') ? 'none' : 'block';
+      });
+    });
+
+    // Закрывать меню, если клик вне меню
+    document.addEventListener('click', function(event) {
+      if (!event.target.matches('.userNamePreferences')) {
+        const dropdowns = document.querySelectorAll('.dropdownPreferences');
+        dropdowns.forEach(function(dropdown) {
+          dropdown.style.display = 'none';
+        });
+      }
+    });
+  });

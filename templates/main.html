@@ -4,8 +4,10 @@
         <meta charset="utf-8">
 		<title>Культуро</title>
 		<meta name="viewport" content="width=device-width">
-        <link rel="stylesheet" href="/static/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
-        <link rel="stylesheet" href="/static/css/style.css">
+		<link rel="stylesheet" href="{{ url_for('static', filename='fonts/material-design-iconic-font/css/material-design-iconic-font.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <!-- <link rel="stylesheet" href="/static/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+        <link rel="stylesheet" href="/static/css/style.css"> -->
         <script src="/static/script/closeMessage.js"></script>
     </head>
     <body>
@@ -19,31 +21,38 @@
         {% endif %}
     	{% endwith %}
         <div class="parent">
-            <div class="head-block">
-                <div class="logo-holder">
-                    <img src="/static/images/logo.png">
-                    <!-- <img src="{{ url_for('static', filename='/images/logo.png') }}"> -->
+            <div class="head-blockMain">
+                <div class="logo-holderMain">
+                    <!-- <img src="/static/images/logo.png"> -->
+                    <img src="{{ url_for('static', filename='/images/logo.png') }}">
                 </div>
-                <div class="navigation-block">
-                    <a>Главная</a>
-                    <a>Места</a>
-                    <a>Профиль</a>
-                    <a href="/logout">Выход</a>
+                <div class="navigation-blockMain">
+                    <a id="headLink" href="#" onclick="switchContentHead()">Главная</a>
+                    <a id="placesLink" href="#" onclick="switchContentPlaces()">Места</a>
+                </div>
+                <div class="userInfoMain">
+                    <p class="userNameMain">Серафим</p>
+                    <div class="dropdownMain">
+                        <a href="/profile">Профиль</a>
+                        <a href="/logout">Выход</a>
+                    </div>
+                    <!-- <img src="/static/images/user-template.png"> -->
+                    <img src="{{ url_for('static', filename='images/user-template.png') }}" alt="Image">
                 </div>
             </div>
             <div class="main-block main-page" id="main-block">
                 <div id="trash-icon" class="hidden trash-icon">
-                    <img height="40px" width="40px" src="/static/images/bin.png">
-                    <!-- <img height="40px" width="40px" src="{{ url_for('static', filename='/images/bin.png') }}"> -->
+                    <!-- <img height="40px" width="40px" src="/static/images/bin.png"> -->
+                    <img height="40px" width="40px" src="{{ url_for('static', filename='/images/bin.png') }}">
                 </div>
                 <div id="swipe-container">
-                    <div class="card" id="card" data-id-place="" style="background-image: url(/static/images/login-form-sign-up.jpg);">
+                    <div class="card" id="card" data-id-place="" style="background-image: url(/static/images/cards/none_png.png);">
                         <div class="infoHolder">
                             <div class="innerInfoCard" id="innerInfoCard">
                                 <h4>Пустой заголовок.</h4>
                             </div>
                             <div class="innerDescriptionCard" id="innerDescriptionCard">
-                                <p>Пустое описание.</p>
+                                <p>Попробуйте обновить страницу.</p>
                             </div>
                             <div id="ratingContainer" class="rating">
                                 <span></span><span></span><span></span><span></span><span></span>
@@ -52,8 +61,8 @@
                     </div>
                 </div>
                 <div id="confirm-icon" class="hidden confirm-icon">
-                    <img height="40px" width="40px" src="/static/images/confirm.png">
-                    <!-- <img height="40px" width="40px" src="{{ url_for('static', filename='/images/bin.png') }}"> -->
+                    <!-- <img height="40px" width="40px" src="/static/images/confirm.png"> -->
+                    <img height="40px" width="40px" src="{{ url_for('static', filename='/images/confirm.png') }}">
                 </div>
             </div>
         </div>

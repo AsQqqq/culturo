@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+		<title>Культуро</title>
+		<meta name="viewport" content="width=device-width">
+		<link rel="stylesheet" href="{{ url_for('static', filename='fonts/material-design-iconic-font/css/material-design-iconic-font.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <!-- <link rel="stylesheet" href="/static/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+        <link rel="stylesheet" href="/static/css/style.css"> -->
+        <script src="/static/script/closeMessage.js"></script>
+    </head>
+    <body>
+        {% with messages = get_flashed_messages() %}
+		{% if messages %}
+            <div id="popupContainer">
+                <div class="popup show">{{ messages[0] }}
+                    <span class="close" onclick="closePopup(this.parentElement)">&times;</span>
+                </div>
+            </div>
+        {% endif %}
+    	{% endwith %}
+        <div class="parent">
+            <div class="main-block profile-page">
+                <div class="profile-content">
+                    <div class="header-text">
+                        <div class="backLinkProfile">
+							<a href="/"><</a>
+						</div>
+                        <div class="header-textProfile">
+                            <p>Профиль</p>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="user-information">
+                        <img src="{{ url_for('static', filename='images/user-template.png') }}">
+                        <p>{{ username }}</p>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="user-change-image">
+                         <p>Изменить фото профиля</p>
+                         <button disabled class="upload-user-image-button" id="upload-user-image-button">Загрузить
+                         </button>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="user-send-criteria">
+                        <p>Оставьте отзыв о сайте</p>
+                        <textarea placeholder="Что вы хотите сказать о нашем сайте?"></textarea>
+                        <button disabled class="upload-criteria-user-button" id="upload-criteria-user-button">Отправить
+                        </button>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="user-get-api">
+                        <p>API</p>
+                        <textarea id="generatedApi" readonly>{{ token }}</textarea>
+                        <form action="/generate_api_key" method="GET">
+                            <button>Сгененрировать токен</button>
+                        </form>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="user-logout">
+                        <form action="/logout" method="GET">
+                            <button class="logout-from-profile" id="logout-from-profile">Выйти из аккаунта
+                            </button>
+                        </form>
+                    </div>
+                    <p>culturo31@gmail.com</p>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="/static/script/profile.js"></script>
+</html>

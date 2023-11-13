@@ -14,6 +14,8 @@ app.secret_key = 'culturo31passwordSecretKey'
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+app.config['JSON_AS_ASCII'] = False
+
 login_manager.login_view = 'index'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{login_base}:{password_base}@{ip_base}/{password_name}'

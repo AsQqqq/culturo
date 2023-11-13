@@ -4,10 +4,11 @@
         <meta charset="utf-8">
         <title>Культуро</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="{{ url_for('static', filename='/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='fonts/material-design-iconic-font/css/material-design-iconic-font.min.css') }}">
 		<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <!-- <link rel="stylesheet" href="/static/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+        <link rel="stylesheet" href="/static/css/style.css"> -->
         <script src="/static/script/closeMessage.js"></script>
-        <link rel="icon" href="/static/images/icon_pages.png" type="image/x-icon">
 	</head>
 	<body>
 		{% with messages = get_flashed_messages() %}
@@ -19,23 +20,38 @@
             </div>
         {% endif %}
     	{% endwith %}
-        <div class="wrapper" style="background-image: url(/static/images/background.jpg);">
-            <div class="inner">
-                <form id="selectPlaceForm" action="/process_form" method="post">
-                    <h3>Укажите свои предпочтения</h3>
-                    <div class="form-wrapper">
-                        <select id="placeSelect" class="form-control selectPlace" name="selected_location" onchange="checkConditions()">
-                            <option value="" disabled selected>Место проведения</option>
-                            {% for item in items %}
-                                <option value="{{ item[0] }}">{{ item[0] }}</option>
-                            {% endfor %}
-                        </select>
+        <div class="parentPreferences">
+            <div class="headPreferences">
+                <div class="logo-holderPreferences">
+                    <!-- <img src="/static/images/logo.png"> -->
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Image">
+                </div>
+                <div class="userInfoPreferences">
+                    <p class="userNamePreferences">{{ username }}</p>
+                    <div class="dropdownPreferences">
+                        <a href="/logout">Выход</a>
                     </div>
-                    <button id="continueButton">Продолжить
-						<i class="zmdi zmdi-arrow-right"></i>
-					</button>
-                    <a href="/logout">Выйти из аккаунта</a>
-                </form>
+                    <!-- <img src="/static/images/user-template.png"> -->
+                    <img src="{{ url_for('static', filename='images/user-template.png') }}" alt="Image">
+                </div>
+            </div>
+            <div class="preferencesBlock" style="background-image: url(/static/images/background.jpg);">
+                <div class="inner">
+                    <form id="selectPlaceForm" action="/process_form" method="post">
+                        <h3>Укажите свои предпочтения</h3>
+                        <div class="form-wrapper">
+                            <select id="placeSelect" class="form-control selectPlace" name="selected_location" onchange="checkConditions()">
+                                <option value="" disabled selected>Место проведения</option>
+                                {% for item in items %}
+                                    <option value="{{ item[0] }}">{{ item[0] }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button id="continueButton">Продолжить
+                            <i class="zmdi zmdi-arrow-right"></i>
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </body>

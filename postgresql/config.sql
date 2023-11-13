@@ -27,7 +27,8 @@ CREATE TABLE IF NOT EXISTS accounts (
     save BOOLEAN DEFAULT FALSE,
     tested BOOLEAN DEFAULT FALSE,
     common_location VARCHAR(255), 
-    user_id VARCHAR(255) NOT NULL
+    user_id VARCHAR(255) NOT NULL,
+    token VARCHAR(255)
 );
 
 -- Проверка существования таблицы 'places' и создание, если не существует
