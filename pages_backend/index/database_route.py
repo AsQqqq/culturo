@@ -175,3 +175,14 @@ def active_token_api(username: str):
     if str(existing_entry[0]) != "None":
         return True
     return False
+
+
+def active_token_project(username: str):
+    copy_query = f"SELECT token FROM accounts WHERE username = '{username}'"
+    cursor = database_query(copy_query, "return")
+    existing_entry = cursor.fetchone()
+    print(existing_entry)
+
+    if str(existing_entry[0]) != "None":
+        return True
+    return False
