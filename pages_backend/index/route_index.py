@@ -20,7 +20,7 @@ def index() -> render_template:
         if current_user.is_authenticated:
             user_id = current_user.user_id
             if get_testing(user_id=user_id):
-                return render_template("main.html")
+                return render_template("main.html", username=current_user.name)
             else:
                 items = set(get_data_database_testing())
                 return render_template(f"{main_index.index}.html", username=current_user.name, items=items)

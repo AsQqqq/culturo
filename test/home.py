@@ -1,26 +1,27 @@
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template
 from flask_socketio import SocketIO, emit
+import time
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'secret'
 socketio = SocketIO(app)
+
+active_users = 0
 
 @app.route('/')
 def index():
-    return render_template('home.html')
+    return render_template('index.html', active_users=active_users)
 
+@socketio.on('connect')
+def handle_connect():
+    global active_users
+    active_users += 1
+    emit('update_users', {'active_users': active_users}, broadcast=True)
 
-@app.route('/sign_in')
-def sign_in():
-    return render_template('sign_in.html')
-
-@socketio.on('message')
-def handle_message(data):
-    message = data['message']
-    if message != "root":
-        emit('notification', {'message': 'Уведомление: ' + message}, broadcast=True)
-    else:
-        emit('redirect', {'url': '/sign_in'}, broadcast=True)
+@socketio.on('disconnect')
+def handle_disconnect():
+    global active_users
+    active_users -= 1
+    emit('update_users', {'active_users': active_users}, broadcast=True)
 
 if __name__ == '__main__':
-    socketio.run(app)
+    socketio.run(app, debug=True)

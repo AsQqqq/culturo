@@ -2,6 +2,7 @@ from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from decoding import get_database_place
+# from flask_socketio import SocketIO
 
 
 ip_base = get_database_place()[1]
@@ -13,6 +14,7 @@ app = Flask(__name__)
 app.secret_key = 'culturo31passwordSecretKey'
 login_manager = LoginManager()
 login_manager.init_app(app)
+# socketio = SocketIO(app)
 
 app.config['JSON_AS_ASCII'] = False
 
