@@ -2,8 +2,8 @@ const nameInput = document.getElementsByName("name")[0];
 const surnameInput = document.getElementsByName("surname")[0];
 const loginInput = document.getElementsByName("login")[0];
 const emailInput = document.getElementsByName("email")[0];
-passwordInput = document.getElementsByName("password")[0];
-rePasswordInput = document.getElementsByName("confirm_password")[0];
+const passwordInput = document.getElementsByName("password")[0];
+const rePasswordInput = document.getElementsByName("confirm_password")[0];
 const buttonSignUp = document.getElementById("sign_up_button");
 
 

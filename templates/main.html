@@ -4,23 +4,40 @@
         <meta charset="utf-8">
 		<title>Культуро</title>
 		<meta name="viewport" content="width=device-width">
-		<link rel="stylesheet" href="{{ url_for('static', filename='/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='fonts/material-design-iconic-font/css/material-design-iconic-font.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
         <!-- <link rel="stylesheet" href="/static/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
         <link rel="stylesheet" href="/static/css/style.css"> -->
-		<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <script src="/static/script/closeMessage.js"></script>
     </head>
     <body>
+        {% with messages = get_flashed_messages() %}
+		{% if messages %}
+            <div id="popupContainer">
+                <div class="popup show">{{ messages[0] }}
+                    <span class="close" onclick="closePopup(this.parentElement)">&times;</span>
+                </div>
+            </div>
+        {% endif %}
+    	{% endwith %}
         <div class="parent">
-            <div class="head-block">
-                <div class="logo-holder">
+            <div class="head-blockMain">
+                <div class="logo-holderMain">
                     <!-- <img src="/static/images/logo.png"> -->
                     <img src="{{ url_for('static', filename='/images/logo.png') }}">
                 </div>
-                <div class="navigation-block">
-                    <a>Главная</a>
-                    <a>Места</a>
-                    <a>Профиль</a>
-                    <a href="/logout">Выход</a>
+                <div class="navigation-blockMain">
+                    <a id="headLink" href="#" onclick="switchContentHead()">Главная</a>
+                    <a id="placesLink" href="#" onclick="switchContentPlaces()">Места</a>
+                </div>
+                <div class="userInfoMain">
+                    <p class="userNameMain">{{ username }}</p>
+                    <div class="dropdownMain">
+                        <a href="/profile">Профиль</a>
+                        <a href="/logout">Выход</a>
+                    </div>
+                    <!-- <img src="/static/images/user-template.png"> -->
+                    <img src="{{ url_for('static', filename='images/user-template.png') }}" alt="Image">
                 </div>
             </div>
             <div class="main-block main-page" id="main-block">
@@ -29,32 +46,27 @@
                     <img height="40px" width="40px" src="{{ url_for('static', filename='/images/bin.png') }}">
                 </div>
                 <div id="swipe-container">
-                    <div class="card" id="card" data-id-place="">
-                        <!-- <img src="/static/images/login-form-sign-in.jpg"> -->
-                        <img src="{{ url_for('static', filename='/images/confirm.png') }}"
-                        <h4>Дом культуры "Горняк"</h4>
-                        <p>loremru66</p>
+                    <div class="card" id="card" data-id-place="" style="background-image: url(/static/images/cards/none_png.png);">
+                        <div class="infoHolder">
+                            <div class="innerInfoCard" id="innerInfoCard">
+                                <h4>Пустой заголовок.</h4>
+                            </div>
+                            <div class="innerDescriptionCard" id="innerDescriptionCard">
+                                <p>Попробуйте обновить страницу.</p>
+                            </div>
+                            <div id="ratingContainer" class="rating">
+                                <span></span><span></span><span></span><span></span><span></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div id="confirm-icon" class="hidden confirm-icon">
                     <!-- <img height="40px" width="40px" src="/static/images/confirm.png"> -->
-                    <img height="40px" width="40px" src="{{ url_for('static', filename='/images/bin.png') }}">
+                    <img height="40px" width="40px" src="{{ url_for('static', filename='/images/confirm.png') }}">
                 </div>
             </div>
         </div>
     </body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
     <script src="/static/script/mainPage.js"></script>
-    <script>
-        var swipeContainer = document.getElementById('swipe-container');
-        var hammer = new Hammer(swipeContainer);
-
-        hammer.on('swipeleft', function() {
-            console.log('Swipe left!');
-        });
-
-        hammer.on('swiperight', function() {
-            console.log('Swipe right!');
-        });
-    </script>
 </html>
