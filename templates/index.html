@@ -1,5 +1,9 @@
 <!DOCTYPE html>
+
+<!-- Промо-страница сайта -->
+
 <html>
+
     <head>
         <meta charset="utf-8">
 		<title>Культуро</title>
@@ -9,7 +13,9 @@
         <script src="/static/script/closeMessage.js"></script>
         <link rel="icon" href="/static/images/icon_pages.png" type="image/x-icon">
     </head>
+
     <body>
+
         {% with messages = get_flashed_messages() %}
 		{% if messages %}
             <div id="popupContainer">
@@ -19,6 +25,7 @@
             </div>
         {% endif %}
     	{% endwith %}
+
         <div class="parent">
             <div class="head-block">
                 <div class="logo-holder">
@@ -30,6 +37,7 @@
                     <a href="#" onclick="switchContentDevelopers()" id="developersLink">Создатели</a>
                 </div>
             </div>
+            <!-- Страница "Главная" -->
             <div class="main-block" id="main-block">
                 <div class="mainSquare">
                     <h2>Твой личный проводник в культуру.</h2>
@@ -43,6 +51,7 @@
 					</div>
                 </div>
             </div>
+            <!-- Страница "Что это?" -->
             <div class="about-block" id="about-block">
                 <div class="aboutSquare">
                     <h2>Культуро - это не просто сайт.</h2>
@@ -53,6 +62,7 @@
                     </h6>
                 </div>
             </div>
+            <!-- Страница "Авторы" -->
             <div class="developers-block" id="developers-block">
                 <div class="developersSquare">
                     <div class="frontendDeveloper">
@@ -69,7 +79,7 @@
                     </div>
                     <div class="analytistDeveloper">
                         <img src="{{ url_for('static', filename='images/alexandr.png') }}">
-                        <h3>Analytist</h3>
+                        <h3>Analyst</h3>
                         <h2>Захаров</h2>
                         <h2>Александр</h2>
                     </div>
@@ -77,5 +87,7 @@
             </div>
         </div>
     </body>
+
     <script src="/static/script/promoPage.js"></script>
+
 </html>

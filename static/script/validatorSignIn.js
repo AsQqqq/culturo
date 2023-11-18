@@ -1,3 +1,6 @@
+// Валидация полей на странице входа
+
+// Валидация поля "Логин"
 function validateLogin () {
     let loginInput = document.getElementsByName("login")[0];
     

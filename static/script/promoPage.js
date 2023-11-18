@@ -1,3 +1,5 @@
+// Функционал промо-страницы
+
 let mainBlock = document.getElementById("main-block");
 let aboutBlock = document.getElementById("about-block");
 let developersBlock = document.getElementById("developers-block");
@@ -5,8 +7,7 @@ let mainLink = document.getElementById("mainLink");
 let aboutLink = document.getElementById("aboutLink");
 let developersLink = document.getElementById("developersLink")
 
-
-
+// Анимация для переключения на вкладку "Главная"
 function switchContentMain () {
     aboutBlock.style.display = "none";
     developersBlock.style.display = "none";
@@ -18,6 +19,7 @@ function switchContentMain () {
     mainBlock.style.display = "flex";
 }
 
+// Анимация для переключения на страницу "Что это?"
 function switchContentAbout () {
     mainBlock.style.display = "none";
     developersBlock.style.display = "none";
@@ -29,6 +31,7 @@ function switchContentAbout () {
     aboutBlock.style.display = "flex";
 }
 
+// Анимация для переключения на страницу "Разработчики"
 function switchContentDevelopers () {
     aboutBlock.style.display = "none";
     mainBlock.style.display = "none";

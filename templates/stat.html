@@ -1,71 +1,77 @@
 <!DOCTYPE html>
+
+<!-- Страница со статистикой -->
+
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kdam+Thmor+Pro&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <title>Статистика сайта</title>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #3498db, #2980b9);
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            box-sizing: border-box;
-            padding: 20px;
-        }
 
-        .info-block {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        h1 {
-            margin: 5px 0;
-        }
-    </style>
-    <title>Статистика</title>
-</head>
-<body>
-    <div class="info-block">
-        <h1 id="total-accounts"></h1>
-        <p>Всего аккаунтов</p>
-    </div>
-    <div class="info-block">
-        <h1 id="total-places"></h1>
-        <p>Всего мест</p>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
-    <script>
-        $(document).ready(function(){
-            function updateData() {
-                $.ajax({
-                    url: '/statistic',
-                    type: 'GET',
-                    success: function(data) {
-                        console.log(data.total_accounts)
-                        console.log(data.total_places)
-                        $('#total-accounts').text(data.total_accounts);
-                        $('#total-places').text(data.total_places);
-                    }
-                });
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Kdam+Thmor+Pro&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+        <title>Статистика сайта</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+                background: linear-gradient(to right, #3498db, #2980b9);
+                color: #fff;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                box-sizing: border-box;
+                padding: 20px;
             }
-            setInterval(updateData, 500);
-            updateData()
-        });
-    </script>
-</body>
+
+            .info-block {
+                text-align: center;
+                margin: 20px 0;
+            }
+
+            h1 {
+                margin: 5px 0;
+            }
+        </style>
+        <title>Статистика</title>
+    </head>
+
+    <body>
+        <div class="info-block">
+            <h1 id="total-accounts"></h1>
+            <p>Всего аккаунтов</p>
+        </div>
+        <div class="info-block">
+            <h1 id="total-places"></h1>
+            <p>Всего мест</p>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+        <script>
+            $(document).ready(function(){
+                function updateData() {
+                    $.ajax({
+                        url: '/statistic',
+                        type: 'GET',
+                        success: function(data) {
+                            console.log(data.total_accounts)
+                            console.log(data.total_places)
+                            $('#total-accounts').text(data.total_accounts);
+                            $('#total-places').text(data.total_places);
+                        }
+                    });
+                }
+                setInterval(updateData, 500);
+                updateData()
+            });
+        </script>
+    </body>
+
 </html>

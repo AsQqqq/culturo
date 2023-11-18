@@ -1,8 +1,10 @@
+// Функционал кнопки на странице входа
+
 const loginInput = document.getElementsByName("login")[0];
 const passwordInput = document.getElementsByName("password")[0];
 const buttonSignIn = document.getElementById("sign_in_button");
 
-
+// Проверка условий
 const checkConditions = () => {
     const conditionLogin = loginInput.value.length > 1;
     const conditionPassword = passwordInput.value.length >= 8;

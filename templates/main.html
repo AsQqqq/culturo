@@ -1,16 +1,20 @@
 <!DOCTYPE html>
+
+<!-- Страница со свайпами -->
+
 <html>
+
     <head>
         <meta charset="utf-8">
 		<title>Культуро</title>
 		<meta name="viewport" content="width=device-width">
 		<link rel="stylesheet" href="{{ url_for('static', filename='fonts/material-design-iconic-font/css/material-design-iconic-font.min.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-        <!-- <link rel="stylesheet" href="/static/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
-        <link rel="stylesheet" href="/static/css/style.css"> -->
         <script src="/static/script/closeMessage.js"></script>
     </head>
+
     <body>
+
         {% with messages = get_flashed_messages() %}
 		{% if messages %}
             <div id="popupContainer">
@@ -20,10 +24,11 @@
             </div>
         {% endif %}
     	{% endwith %}
+
         <div class="parent">
+            <!-- Шапка -->
             <div class="head-blockMain">
                 <div class="logo-holderMain">
-                    <!-- <img src="/static/images/logo.png"> -->
                     <img src="{{ url_for('static', filename='/images/logo.png') }}">
                 </div>
                 <div class="navigation-blockMain">
@@ -36,15 +41,15 @@
                         <a href="/profile">Профиль</a>
                         <a href="/logout">Выход</a>
                     </div>
-                    <!-- <img src="/static/images/user-template.png"> -->
                     <img src="{{ url_for('static', filename='images/user-template.png') }}" alt="Image">
                 </div>
             </div>
             <div class="main-block main-page" id="main-block">
+                <!-- Блок с иконкой "Не нравится" -->
                 <div id="trash-icon" class="hidden trash-icon">
-                    <!-- <img height="40px" width="40px" src="/static/images/bin.png"> -->
                     <img height="40px" width="40px" src="{{ url_for('static', filename='/images/bin.png') }}">
                 </div>
+                <!-- Карточка мероприятия -->
                 <div id="swipe-container">
                     <div class="card" id="card" data-id-place="" style="background-image: url(/static/images/cards/none_png.png);">
                         <div class="infoHolder">
@@ -60,13 +65,15 @@
                         </div>
                     </div>
                 </div>
+                <!-- Блок с иконкой "Нравится" -->
                 <div id="confirm-icon" class="hidden confirm-icon">
-                    <!-- <img height="40px" width="40px" src="/static/images/confirm.png"> -->
                     <img height="40px" width="40px" src="{{ url_for('static', filename='/images/confirm.png') }}">
                 </div>
             </div>
         </div>
     </body>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
     <script src="/static/script/mainPage.js"></script>
+
 </html>

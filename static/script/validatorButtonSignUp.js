@@ -1,3 +1,5 @@
+// Функционал кнопки на странице регистрации
+
 const nameInput = document.getElementsByName("name")[0];
 const surnameInput = document.getElementsByName("surname")[0];
 const loginInput = document.getElementsByName("login")[0];
@@ -6,7 +8,7 @@ const passwordInput = document.getElementsByName("password")[0];
 const rePasswordInput = document.getElementsByName("confirm_password")[0];
 const buttonSignUp = document.getElementById("sign_up_button");
 
-
+// Проверка условий активации/деактивации кнопки
 const checkConditions = () => {
   var count = (emailInput.value.match(/@/g) || []).length;
   const conditionName = nameInput.value.length > 1;

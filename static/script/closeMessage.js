@@ -1,3 +1,5 @@
+// Закрытие всплывающего уведомления
+
 function closePopup(element) {
     element.classList.remove("show");
 }

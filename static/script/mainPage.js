@@ -1,19 +1,25 @@
+// Функционал страницы со свайпами
+
 let headLink = document.getElementById("headLink");
 let placesLink = document.getElementById("placesLink");
 
+// Анимация для переключения на страницу "Главная"
 function switchContentHead() {
     placesLink.style.borderBottom = "none";
     headLink.style.borderBottom = "1px solid";
 }
 
+// Анимация для переключения на страницу "Места"
 function switchContentPlaces() {
     headLink.style.borderBottom = "none";
     placesLink.style.borderBottom = "1px solid";
 }
 
+// Управление dropdown-меню
 document.addEventListener('DOMContentLoaded', function() {
     const links = document.querySelectorAll('.userNameMain');
 
+    // Отображение элементов меню
     links.forEach(function(link) {
       link.addEventListener('click', function() {
         const dropdown = this.nextElementSibling;
@@ -21,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
 
-    // Закрывать меню, если клик вне меню
+    // Сокрытие элементов меню
     document.addEventListener('click', function(event) {
       if (!event.target.matches('.userNameMain')) {
         const dropdowns = document.querySelectorAll('.dropdownMain');
@@ -36,9 +42,8 @@ var swipeElement = document.getElementById('swipe-container');
 var startX, startY;
 isLeftButtonPressed = false;
 
-// Функция для выполнения запроса к серверу и обновления данных на странице
+// Выполнение запроса к севреру и возвращение данных обратно на страницу
 function updateData() {
-    // AJAX-запрос к серверу для получения данных
     fetch('/get_data')
         .then(response => response.json())
         .then(data => {
@@ -51,6 +56,7 @@ function updateData() {
         });
 }
 
+// Отправка информации о свайпе вправо
 function sendConfirmResult() {
     fetch('/get_data', {
         method: 'POST',
@@ -62,6 +68,8 @@ function sendConfirmResult() {
     updateData();
 }
 
+
+// Отправка информации о свайпе влево
 function sendTrashResult() {
     fetch('/get_data', {
         method: 'POST',
@@ -73,6 +81,7 @@ function sendTrashResult() {
     updateData();
 }
 
+// Вызов запроса к серверу при обновлении страницы
 updateData();
 
 // Затемнение фона
@@ -100,43 +109,39 @@ function iconsToggle() {
 }
 
 var swipeContainer = document.getElementById('swipe-container');
+// Подключение библиотеки Hammer для орбработки свайпов
 var hammer = new Hammer(swipeContainer);
 
+// Отправка информации о свайпе влево на мобильной версии сайта
 hammer.on('swipeleft', function() {
     sendTrashResult();
 });
 
+// Отправка информации о свайпе вправо на мобильной версии сайта
 hammer.on('swiperight', function() {
     sendConfirmResult();
 });
 
+// Анимация возврата карточки в исходное положение
 swipeElement.addEventListener('mouseup', function () {
     isLeftButtonPressed = false;
     swipeElement.style.transform = 'rotate(0deg)';
 });
 
+// Анимация наклона карточки, взависимости от действий пользователя
 swipeElement.addEventListener('mousemove', function (e) {
     if (isLeftButtonPressed) {
-        // Выполнять действия только при зажатой левой кнопке
-
-        // Получаем разницу между начальной и текущей координатами
         var deltaX = e.clientX - startX;
-
-        // Определяем угол наклона (в данном случае, просто используем deltaX)
-        var angle = deltaX / 10; // Подберите подходящий коэффициент
-
-        // Применяем наклон к элементу
+        var angle = deltaX / 10;
         swipeElement.style.transform = 'rotate(' + angle + 'deg)';
-
-        // ... (ваш остальной код)
     }
 });
 
+// Анимации в случае отмены ЛКМ (на странице)
 document.addEventListener('mouseup', function (e) {
     if (isLeftButtonPressed) {
         if (!swipeElement.contains(e.target)) {
-            // Курсор мыши находится вне swipeElement
-            iconsToggle();  // Скрываем leftElement и rightElement
+            iconsToggle();
         }
         unDarkenMainBlock();
         isLeftButtonPressed = false;
@@ -144,52 +149,51 @@ document.addEventListener('mouseup', function (e) {
     }
 });
 
+// Анимации в случае отмены ЛКМ (на карточке)
 swipeElement.addEventListener('mouseup', function (e) {
     if (swipeElement.contains(e.target)) {
-        // Курсор мыши находится вне swipeElement
-        iconsToggle();  // Скрываем leftElement и rightElement
+        iconsToggle();
     }
     unDarkenMainBlock();
     isLeftButtonPressed = false;
     swipeElement.style.transform = 'rotate(0deg)';
 });
 
-// Проверяем, является ли устройство мобильным
+// Проверка устройства
 var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
 if (isMobile) {
+    // Старт анимаций при нажатии на карточку (мобильная версия)
     swipeElement.addEventListener("touchstart", darkenMainBlock);
     swipeElement.addEventListener("touchend", unDarkenMainBlock);
 } else {
+    // Старт анимаций при нажатии на карточку
     swipeElement.addEventListener('mousedown', function (e) {
         isLeftButtonPressed = true;
         darkenMainBlock();
         iconsToggle();
-        // Запоминаем начальные координаты при нажатии
         startX = e.clientX;
         startY = e.clientY;
     });
 
+    // Обработка действий после отмены ЛКМ на карточке
     swipeElement.addEventListener('mouseup', function (e) {
-        // Вычисляем разницу между начальными и конечными координатами
         unDarkenMainBlock();
 
         var deltaX = e.clientX - startX;
         var deltaY = e.clientY - startY;
 
-        // Проверяем, является ли свайп горизонтальным
         if (Math.abs(deltaX) > Math.abs(deltaY)) {
-            // Горизонтальный свайп
+            // Действия при свайпе влево
             if (deltaX > 10000) {
-                console.log('Свайп вправо');
                 sendConfirmResult();
+            // Действия при свайпе вправо
             } else if (deltaX < -10000) {
-                console.log('Свайп влево');
                 sendTrashResult();
             }
         } else {
-            // Вертикальный свайп (здесь вы можете добавить необходимые действия или игнорировать)
-            console.log('Нужный свайп не произошел');
+            // Обработка в случае непредвиденных действий
+            console.log('Исключение!');
         }
     });
 }
