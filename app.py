@@ -1,21 +1,22 @@
-from pages_backend.reg import (
-    route_index
-)
-from register import app, login_manager
-from database.sqlAlchemy import User
-from decoding import get_ipport
 
 
-host = get_ipport()[0]
-port = get_ipport()[1]
-domain = f"http://{host}:{port}"
 
 
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
+"""
+  ____ _____  _    ____ _____    _____ _        _    ____  _  __
+ / ___|_   _|/ \  |  _ \_   _|  |  ___| |      / \  / ___|| |/ /
+ \___ \ | | / _ \ | |_) || |    | |_  | |     / _ \ \___ \| ' / 
+  ___) || |/ ___ \|  _ < | |    |  _| | |___ / ___ \ ___) | . \ 
+ |____/ |_/_/   \_\_| \_\|_|    |_|   |_____/_/   \_\____/|_|\_\
+
+"""
+
+# Импорт экземпляра Flask приложения app, хоста и порта
+from culturo import app, host, port
+from pages_backend.reg import route
+from database import user_model
 
 
+# Запуск Flask приложения, отключение режима отладки и указание хоста и порта
 if __name__ == "__main__":
-    "Запуск кода"
-    app.run(debug=False, host=host, port=port)
+    app.run(debug=True, host=host, port=port)

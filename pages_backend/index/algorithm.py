@@ -1,53 +1,40 @@
+
+
+
+
+"""
+     _    _     ____  ___ _____ ___ _____ _   _ __  __ 
+    / \  | |   / ___|/ _ \_   _|_ _|_   _| | | |  \/  |
+   / _ \ | |  | |  _| | | || |  | |  | | | |_| | |\/| |
+  / ___ \| |__| |_| | |_| || |  | |  | | |  _  | |  | |
+ /_/   \_\_____\____|\___/ |_| |___| |_| |_| |_|_|  |_|
+
+"""
+
+
 from flask import render_template, flash, jsonify, request
 from pages_backend import app
 from flask_login import current_user
-import main_index
-from database import get_data_database_testing
-from database.decorators import get_testing
 from flask_login import current_user
+from database.queries import select_user_profile, select_all_places, add_user_place, rate_place_user, select_non_liked_local, select_global_ids, \
+    select_global_info, select_all_local_info, select_local_info
 
-from .database_route import select_all_user, select_all_place, add_user_place, confirm_trash_place_user, select_no_liked_local, select_id_from_global, \
-    select_all_info_from_global, select_all_local, select_all_info_from_local
-
-
-place_id = "None"
-
-
-@app.route('/', methods=['GET'])
-def index() -> render_template:
-    """Основная вкладка"""
-    try:
-        if current_user.is_authenticated:
-            user_id = current_user.user_id
-            if get_testing(user_id=user_id):
-                return render_template("main.html", username=current_user.name)
-            else:
-                items = set(get_data_database_testing())
-                return render_template(f"{main_index.index}.html", username=current_user.name, items=items)
-        else:
-            return render_template('index.html')
-    except Exception as e:
-        print(e)
-        flash("Произошла внутренняя ошибка сервера. Обратитесь к администратору.", "error")
-        return render_template('sign_in.html')
 
 
 
 @app.route('/get_data', methods=['GET', 'POST'])
 def get_data():
+    "Работа свайпов для выявления результатов мест"
     global place_id
     try:
         if request.method == "POST":
             data_pages = request.get_json()
             if data_pages == 'confirm':
-                print(f"Сработал confirm: {place_id}")
-                confirm_trash_place_user(place_id=place_id, choice="confirm", username=current_user.username)
+                rate_place_user(place_id=place_id, choice="confirm", username=current_user.username)
             elif data_pages == 'trash':
-                print(f"Сработал trash: {place_id}")
-                confirm_trash_place_user(place_id=place_id, choice="trash", username=current_user.username)
+                rate_place_user(place_id=place_id, choice="trash", username=current_user.username)
 
             data = fetch_data_from_postgresql()
-            print(f"DATA :: {data}")
             if data == None:
                 data = ('none_png.png', 'Пустой заголовок.', 'Попробуйте обновить страницу.')
                 return jsonify(data)
@@ -57,7 +44,6 @@ def get_data():
         
         elif request.method == "GET":
             data = fetch_data_from_postgresql()
-            print(f"DATA :: {data}")
             if data == None:
                 data = ('none_png.png', 'Пустой заголовок.', 'Попробуйте обновить страницу.')
                 return jsonify(data)
@@ -78,13 +64,13 @@ def fetch_data_from_postgresql():
         username = current_user.username
         location = current_user.common_location
 
-        exist = select_all_user(username=username)
+        exist = select_user_profile(username=username)
         if not exist:
             return select_recom_place(location=location)
         else:
-            exist_local = select_no_liked_local(username=username)
-            exist_local_all = select_all_local(username=username)
-            exist_global = select_id_from_global()
+            exist_local = select_non_liked_local(username=username)
+            exist_local_all = select_all_local_info(username=username)
+            exist_global = select_global_ids()
             best_point = select_max_ectimation(exist_local, exist_global, exist_local_all)
             print(f"best_point :: {best_point}")
             if best_point == None:
@@ -95,11 +81,11 @@ def fetch_data_from_postgresql():
                 return best_point[0][2], best_point[0][1], best_point[0][3]
     except Exception as e:
         print(e)
-    
+
 
 def select_recom_place(location: str):
     global place_id
-    exist = select_all_place()
+    exist = select_all_places()
     if exist:
         if count_location(exists=exist, location=location) > 2:
             for i in exist:
@@ -137,14 +123,14 @@ def select_max_ectimation(exist_local, exist_global, exist_local_all):
 
     if max_global:
         best_place = max(max_global, key=lambda x: x[0])[1]
-        best_place = select_all_info_from_global(place_id=best_place)
+        best_place = select_global_info(place_id=best_place)
         return best_place
     else:
         if max_local:
             max_local_return = []
             max_score = None
             for i in max_local:
-                selected = select_all_info_from_local(username=current_user.username, place_id=i[1])
+                selected = select_local_info(username=current_user.username, place_id=i[1])
                 # print(selected)
                 current_score = float(selected[5])
                 current_requests = int(selected[6])
@@ -157,7 +143,7 @@ def select_max_ectimation(exist_local, exist_global, exist_local_all):
 
             # print(max_local_return)
             
-            best_place = select_all_info_from_global(place_id=max_local_return[0][0])
+            best_place = select_global_info(place_id=max_local_return[0][0])
             return best_place
         else:
             return None
@@ -169,8 +155,3 @@ def count_location(exists, location: str):
         if str(i[9]) == location:
             count += 1
     return count
-
-
-
-def upload_index():
-    return True

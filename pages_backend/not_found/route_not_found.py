@@ -1,5 +1,5 @@
 from flask import render_template, flash
-from register import app
+from pages_backend import app
 
 
 @app.errorhandler(404)

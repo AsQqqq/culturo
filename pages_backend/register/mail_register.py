@@ -1,10 +1,9 @@
 from flask import render_template, request, redirect, url_for, flash
 from flask_mail import Mail
-from database.dibs import database_query
-from database import database_query_user_place
+from database.queries import code_search_in_the_database, account_confirmation
 from pages_backend import app
 from flask_login import current_user
-import main_index
+from config import link_testing
 
 mail = 'culturo31@gmail.com'
 password_mail = 'yxfv xizy rmte xvtq'
@@ -25,35 +24,12 @@ def confirm_email(code):
         if current_user.is_authenticated:
             return redirect(url_for("index"))
         
-        sql_query = f"SELECT * FROM code WHERE code = '{code}'"
-        cursor = database_query(sql_query, "return")
-        existing_entry = cursor.fetchone()
-        if existing_entry:
-            sql_query = f"UPDATE code SET activate = False WHERE code = '{code}'"
-            cursor = database_query(sql_query, "none")
-
-            code_nickname = code.split("-")[3]
-            sql_query = f"UPDATE accounts SET save = True WHERE username = '{code_nickname}'"
-            cursor = database_query(sql_query, "none")
-
-            try:
-                sql_query = f'''
-                CREATE TABLE IF NOT EXISTS {code_nickname} (
-                    id SERIAL PRIMARY KEY,
-                    place_id VARCHAR(255),
-                    user_id VARCHAR(255),
-                    record_id VARCHAR(255),
-                    liked BOOLEAN DEFAULT (FALSE),
-                    estimation DOUBLE PRECISION DEFAULT (5),
-                    request BIGINT DEFAULT (0)
-                )
-                '''
-                database_query_user_place(sql_query=sql_query, types="none")
-            except Exception as e:
-                print(e)
+        if code_search_in_the_database(code=code):
+            account_confirmation(code=code)
             return redirect(url_for(("login")))
         return redirect(url_for('index'))
     except Exception as e:
+        print(e)
         flash("Произошла внутренняя ошибка сервера. Обратитесь к администратору.", "error")
         return render_template('sign_in.html')
 
@@ -62,8 +38,8 @@ def confirm_email(code):
 def validation_code(email) -> str: 
     try:
         if current_user.is_authenticated:
-            return redirect(url_for((main_index.testing)))
-
+            return redirect(url_for((link_testing)))
+        
         domain = email.split("@")[-1].lower()
         if domain == "yandex.ru":
             email_url = "https://mail.yandex.ru"
@@ -77,5 +53,6 @@ def validation_code(email) -> str:
         else:
             return render_template('validation_code.html', email=email_url)
     except Exception as e:
+        print(e)
         flash("Произошла внутренняя ошибка сервера. Обратитесь к администратору.", "error")
         return render_template('sign_in.html')

@@ -1,30 +1,22 @@
-from register import db, login_manager
-from sqlalchemy import types
+# Импорт необходимых модулей и библиотек
+from culturo import login_manager
+from culturo.database import db
 from flask_login import UserMixin
-
-
-class Point(types.TypeDecorator):
-    impl = types.String
-
-    def process_bind_param(self, value, dialect):
-        if value is not None:
-            return f'({value[0]}, {value[1]})'
-
-    def process_result_value(self, value, dialect):
-        if value is not None:
-            return tuple(map(float, value[1:-1].split(', ')))
-
 
 
 @login_manager.user_loader
 def load_user(user_id):
+    "Функция для загрузки пользователя по его идентификатору"
     return User.query.get(int(user_id))
 
 
 class User(UserMixin, db.Model):
+    "Класс, представляющий модель пользователя в базе данных"
+    # Настройки таблицы в базе данных
     __table_args__ = {'schema': 'public', 'extend_existing': True}
     __tablename__ = 'accounts'
 
+    # Поля пользователя
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
     surname = db.Column(db.String(255), nullable=False)

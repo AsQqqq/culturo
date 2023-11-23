@@ -1,6 +1,7 @@
-from database.decorators import get_testing
+x = input(">> ")
+print(x)
 
-if not get_testing(login="danila"):
-    print("1")
+if x == "123":
+    print("Пенис")
 else:
-    print("2")
+    print("Попа")

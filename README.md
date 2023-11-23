@@ -1,7 +1,7 @@
 # Культуро
 
 
-[![Picture](https://github.com/AsQqqq/culturo/blob/master/GitAssets/image/1.png?raw=true)](#культуро)
+[![Picture](https://github.com/AsQqqq/culturo/blob/master/gitAssets/image/1.png?raw=true)](#культуро)
 
 
 ### О проекте
@@ -26,13 +26,13 @@
 - [Настройка Python](#настройка-проекта)
 - [Настройка Postgresql](#настройка-postgresql)
 - [Разработчики](#разработчики)
-- [Ошибки при установке](https://github.com/AsQqqq/culturo/blob/master/GitAssets/MD/ERROR.md#ошибка-команды-psql)
+- [Ошибки при установке](https://github.com/AsQqqq/culturo/blob/master/gitAssets/MD/ERROR.md#ошибка-команды-psql)
 - **[Нашёл ошибку!](#нашёл-ошибку-в-проекте)**
 
 
 ---
 
-[![Picture](https://github.com/AsQqqq/culturo/blob/master/GitAssets/image/2.png?raw=true)](#культуро)
+[![Picture](https://github.com/AsQqqq/culturo/blob/master/gitAssets/image/2.png?raw=true)](#культуро)
 
 ### Описание репозитория
 
@@ -43,7 +43,7 @@
 
 ---
 
-[![Picture](https://github.com/AsQqqq/culturo/blob/master/GitAssets/image/5.png?raw=true)](#культуро)
+[![Picture](https://github.com/AsQqqq/culturo/blob/master/gitAssets/image/5.png?raw=true)](#культуро)
 
 ### Настройка проекта
 
@@ -79,7 +79,7 @@ python -m venv .venv
 
 Эта команда создаст виртуальное окружение в директории .venv в корне вашего проекта.
 
-В случай ошибок, смотрите [здесь](https://github.com/AsQqqq/culturo/blob/master/GitAssets/MD/ERROR.md#ошибка-команды-python-venv).
+В случай ошибок, смотрите [здесь](https://github.com/AsQqqq/culturo/blob/master/gitAssets/MD/ERROR.md#ошибка-команды-python-venv).
 
 **Активируйте виртуальное окружение**
 
@@ -114,7 +114,7 @@ Python установит все зависимости, перечисленн�
 
 ---
 
-[![Picture](https://github.com/AsQqqq/culturo/blob/master/GitAssets/image/4.png?raw=true)](#культуро)
+[![Picture](https://github.com/AsQqqq/culturo/blob/master/gitAssets/image/4.png?raw=true)](#культуро)
 
 
 ### Настройка Postgresql
@@ -132,14 +132,14 @@ $ psql -U postgres -f config.sql
 Эта команда создаст необходимые базы данных в PostgreSQL, а также настроит их соответствующим образом.
 
 
-В случай ошибок, смотрите [здесь](https://github.com/AsQqqq/culturo/blob/master/GitAssets/MD/ERROR.md#ошибка-команды-psql).
+В случай ошибок, смотрите [здесь](https://github.com/AsQqqq/culturo/blob/master/gitAssets/MD/ERROR.md#ошибка-команды-psql).
 
 
 [Вернуться](#путеводитель)
 
 ---
 
-[![Picture](https://github.com/AsQqqq/culturo/blob/master/GitAssets/image/3.png?raw=true)](#культуро)
+[![Picture](https://github.com/AsQqqq/culturo/blob/master/gitAssets/image/3.png?raw=true)](#культуро)
 
 ### Разработчики
 
@@ -161,7 +161,7 @@ $ psql -U postgres -f config.sql
 
 ---
 
-[![Picture](https://github.com/AsQqqq/culturo/blob/master/GitAssets/image/6.png?raw=true)](#культуро)
+[![Picture](https://github.com/AsQqqq/culturo/blob/master/gitAssets/image/6.png?raw=true)](#культуро)
 
 ### Нашёл ошибку в проекте
 

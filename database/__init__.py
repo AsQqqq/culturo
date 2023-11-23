@@ -1,2 +1,2 @@
-from .items_places import get_data_database_testing
-from .dibs import database_query_user_place
+from .queries import get_common_location_from_test
+# from .queries import database_query_user_place

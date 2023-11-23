@@ -1,18 +1,18 @@
 from flask import render_template, request, redirect, url_for, flash
 from flask_mail import Message
 from pages_backend import app
-from . import selected_verification_code, checking_user, \
-    pre_save_account, generate_verification_code, mail
-from .database_register import get_email
+from database.queries import get_email, selected_verification_code, checking_user, \
+    pre_save_account, generate_verification_code
+from .mail_register import mail
 from flask_login import current_user
-import main_index
+from config import link_testing
 
 
 @app.route('/register', methods=['POST', 'GET'])
 def register() -> str:     
     try:
         if current_user.is_authenticated:
-                return redirect(url_for(main_index.testing))
+                return redirect(url_for(link_testing))
 
         if request.method == "POST":
             name = request.form.get('name')
@@ -64,11 +64,9 @@ def register() -> str:
             return render_template('sign_up.html')
         
     except Exception as e:
-        flash("Произошла внутренняя ошибка сервера. Обратитесь к администратору.", "error")
+        print(e)
+        flash(f"Произошла внутренняя ошибка сервера. Обратитесь к администратору.\n{e}", "error")
         return render_template('sign_in.html')
-    
-
-
 
     
 def upload_register():
