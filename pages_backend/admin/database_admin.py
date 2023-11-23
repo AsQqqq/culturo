@@ -1,7 +1,4 @@
-from database.dibs import database_query
-from database import database_query_user_place
-import secrets
-from main_index import trash_setting
+from database.queries import database_query
 
 
 def count_all_accounts():

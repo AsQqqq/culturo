@@ -9,3 +9,4 @@ from pages_backend.api import api
 from pages_backend.profile import route
 # from .places.route_places import upload_places
 # from .admin.route_admin import upload_admin
+from pages_backend.admin import route_admin
