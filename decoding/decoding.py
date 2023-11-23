@@ -31,15 +31,15 @@ def get_database_config_main() -> Tuple[str, str]:
             DATABASE_PASSWORD_PLACE, DATABASE_PORT, DATABASE
 
 
-# def get_database_config_place() -> Tuple[str, str]:
-#     "Получения данных для входа в дополнительную базу данных"
-#     DATABASE_LOGIN_PLACE = environ["LOGIN_PLACE"]
-#     DATABASE_URL = environ["DATABASE_URL"]
-#     DATABASE_PASSWORD_PLACE = environ["PASSWORD_MAIN"]
-#     DATABASE_PORT = environ["DATABASE_PORT"]
-#     DATABASE = environ["DATABASE_NAME"]
-#     return DATABASE_LOGIN_PLACE, DATABASE_URL, \
-#             DATABASE_PASSWORD_PLACE, DATABASE_PORT, DATABASE
+def get_database_config_place() -> Tuple[str, str]:
+    "Получения данных для входа в дополнительную базу данных"
+    DATABASE_LOGIN_PLACE = environ["LOGIN_MAIN"]
+    DATABASE_URL = environ["DATABASE_URL"]
+    DATABASE_PASSWORD_PLACE = environ["PASSWORD_MAIN"]
+    DATABASE_PORT = environ["DATABASE_PORT"]
+    DATABASE = environ["DATABASE_NAME_PLACE"]
+    return DATABASE_LOGIN_PLACE, DATABASE_URL, \
+            DATABASE_PASSWORD_PLACE, DATABASE_PORT, DATABASE
 
 
 def get_config_server() -> Tuple[str, str]:

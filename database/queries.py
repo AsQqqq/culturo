@@ -11,7 +11,7 @@
 
 """
 
-from database.control_database import database_query # , database_query_user_place
+from database.control_database import database_query, database_query_user_place
 import secrets
 from config import estimation
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -188,21 +188,21 @@ def select_user_profile(username: str):
     return result
 
 
-def generate_hex_token(username: str):
+def generate_hex_token_place(username: str):
     """Сгенерировать токен для места в базе данных пользователя"""
     code = f"{secrets.token_hex(16)}"
     sql = f"SELECT * FROM {username} WHERE record_id = '{code}'"
     cursor = database_query_user_place(sql_query=sql, types="return")
     existing_entry = cursor.fetchone()
     if existing_entry:
-        generate_hex_token(username=username)
+        generate_hex_token_place(username=username)
         return
     return code
 
 
 def add_user_place(user_id: str, place_id: str, username: str):
     """Добавить место в базу данных пользователя"""
-    record_id = generate_hex_token(username=username)
+    record_id = generate_hex_token_place(username=username)
     sql = f"SELECT * FROM {username} WHERE place_id = '{place_id}'"
     cursor = database_query_user_place(sql_query=sql, types="return")
     rows = cursor.fetchall()

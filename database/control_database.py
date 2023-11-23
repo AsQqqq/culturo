@@ -14,7 +14,7 @@
 # Импорт модулей flask
 from psycopg2 import connect, Error
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
-from decoding import get_database_config_main # , get_database_config_place
+from decoding import get_database_config_main, get_database_config_place
 from flask_login import UserMixin
 
 
@@ -35,21 +35,21 @@ def connected_database_main() -> tuple[connect, connect]:
         print("Ошибка при работе с PostgreSQL", error)
 
 
-# def connected_database_places() -> tuple[connect, connect]:
-#     "Функция для подключения к базе данных мест"
-#     try:
-#         connection: connect = connect(
-#             user=get_database_config_place()[0],
-#             password=get_database_config_place()[2],
-#             host=get_database_config_place()[1],
-#             port=get_database_config_place()[3],
-#             database=get_database_config_place()[4]
-#         )
-#         connection.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-#         cursor = connection.cursor()
-#         return connection, cursor
-#     except (Exception, Error) as error:
-#         print("Ошибка при работе с PostgreSQL", error)
+def connected_database_places() -> tuple[connect, connect]:
+    "Функция для подключения к базе данных мест"
+    try:
+        connection: connect = connect(
+            user=get_database_config_place()[0],
+            password=get_database_config_place()[2],
+            host=get_database_config_place()[1],
+            port=get_database_config_place()[3],
+            database=get_database_config_place()[4]
+        )
+        connection.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+        cursor = connection.cursor()
+        return connection, cursor
+    except (Exception, Error) as error:
+        print("Ошибка при работе с PostgreSQL", error)
 
 
 def closing_database(cursor, connection):
@@ -71,16 +71,16 @@ def database_query(sql_query: str, types: str) -> connect or None:
     closing_database(cursor=cursor, connection=connection)
 
 
-# def database_query_user_place(sql_query: str, types: str) -> connect or None:
-#     "Функция для выполнения запроса к базе данных мест"
-#     connection, cursor = connected_database_places()
+def database_query_user_place(sql_query: str, types: str) -> connect or None:
+    "Функция для выполнения запроса к базе данных мест"
+    connection, cursor = connected_database_places()
 
-#     cursor.execute(sql_query)
+    cursor.execute(sql_query)
     
-#     if types == "return":
-#         return cursor
+    if types == "return":
+        return cursor
     
-#     closing_database(cursor=cursor, connection=connection)
+    closing_database(cursor=cursor, connection=connection)
 
 
 class User(UserMixin):
