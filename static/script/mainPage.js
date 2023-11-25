@@ -17,7 +17,7 @@ function switchContentPlaces() {
 
 // Управление dropdown-меню
 document.addEventListener('DOMContentLoaded', function() {
-    const links = document.querySelectorAll('.userNameMain');
+    const links = document.querySelectorAll('.dropdown-selector');
 
     // Отображение элементов меню
     links.forEach(function(link) {
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Сокрытие элементов меню
     document.addEventListener('click', function(event) {
-      if (!event.target.matches('.userNameMain')) {
+      if (!event.target.matches('.dropdown-selector')) {
         const dropdowns = document.querySelectorAll('.dropdownMain');
         dropdowns.forEach(function(dropdown) {
           dropdown.style.display = 'none';
@@ -86,13 +86,13 @@ updateData();
 
 // Затемнение фона
 function darkenMainBlock() {
-    var imageContainer = document.getElementById("main-block");
+    var imageContainer = document.getElementById("content-block-main");
     imageContainer.classList.toggle("darken");
 }
 
 // Возврат фона в исходную палитру
 function unDarkenMainBlock() {
-    var imageContainer = document.getElementById("main-block");
+    var imageContainer = document.getElementById("content-block-main");
     imageContainer.classList.remove("darken");
     swipeElement.addEventListener("touchend", unDarkenMainBlock);
 }
@@ -122,12 +122,6 @@ hammer.on('swiperight', function() {
     sendConfirmResult();
 });
 
-// Анимация возврата карточки в исходное положение
-swipeElement.addEventListener('mouseup', function () {
-    isLeftButtonPressed = false;
-    swipeElement.style.transform = 'rotate(0deg)';
-});
-
 // Анимация наклона карточки, взависимости от действий пользователя
 swipeElement.addEventListener('mousemove', function (e) {
     if (isLeftButtonPressed) {
@@ -135,6 +129,33 @@ swipeElement.addEventListener('mousemove', function (e) {
         var angle = deltaX / 10;
         swipeElement.style.transform = 'rotate(' + angle + 'deg)';
     }
+});
+
+// Анимация возврата карточки в исходное положение
+swipeElement.addEventListener('mouseup', function () {
+    isLeftButtonPressed = false;
+    swipeElement.style.transform = 'rotate(0deg)';
+});
+
+let isTouchActive = false;
+let startXM = 0;
+
+swipeElement.addEventListener('touchstart', function (e) {
+    isTouchActive = true;
+    startXM = e.touches[0].clientX;
+});
+
+swipeElement.addEventListener('touchmove', function (e) {
+    if (isTouchActive) {
+        let deltaX = e.touches[0].clientX - startXM;
+        let angle = deltaX / 10;
+        swipeElement.style.transform = 'rotate(' + angle + 'deg)';
+    }
+});
+
+swipeElement.addEventListener('touchend', function () {
+    isTouchActive = false;
+    swipeElement.style.transform = 'rotate(0deg)';
 });
 
 // Анимации в случае отмены ЛКМ (на странице)
@@ -165,7 +186,10 @@ var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 if (isMobile) {
     // Старт анимаций при нажатии на карточку (мобильная версия)
     swipeElement.addEventListener("touchstart", darkenMainBlock);
+    swipeElement.addEventListener("touchstart", iconsToggle);
     swipeElement.addEventListener("touchend", unDarkenMainBlock);
+    swipeElement.addEventListener("touchend", iconsToggle);
+    document.addEventListener("touchend", iconsToggle);
 } else {
     // Старт анимаций при нажатии на карточку
     swipeElement.addEventListener('mousedown', function (e) {
@@ -196,4 +220,19 @@ if (isMobile) {
             console.log('Исключение!');
         }
     });
+}
+
+// Переключение контента на карточке
+
+var detailsCard = document.getElementById('details-container');
+detailsCard.style.display = 'none';
+
+function showDetailsCard() {
+    detailsCard.style.display = 'flex';
+    swipeContainer.style.display = 'none';
+}
+
+function hideDetailsCard() {
+    detailsCard.style.display = 'none';
+    swipeContainer.style.display = 'flex';
 }

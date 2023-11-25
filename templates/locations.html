@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+		<title>Культуро</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<!-- <link rel="stylesheet" href="{{ url_for('static', filename='fonts/material-design-iconic-font/css/material-design-iconic-font.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> -->
+        <link rel="stylesheet" href="/static/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+        <link rel="stylesheet" href="/static/css/style.css">
+        <script src="/static/script/closeMessage.js"></script>
+    </head>
+
+    <body>
+        <div class="parent-main-page">
+            <div class="head-block-main">
+                <div class="back-link-main">
+                    <a href="#"><</a>
+                </div>
+                <div class="logo-holder-main">
+                    <!-- <img src="{{ url_for('static', filename='/images/logo.png') }}"> -->
+                    <img src="/static/images/logo.png">
+                </div>
+                <div class="navigation-block-main">
+                    <a id="headLink" href="#" onclick="switchContentHead()">Главная</a>
+                    <a id="placesLink" href="#" onclick="switchContentPlaces()">Локации</a>
+                </div>
+                <div class="user-info-main">
+                    <p class="dropdown-selector">{{ username }}</p>
+                    <div class="dropdownMain">
+                        <a href="/profile">Профиль</a>
+                        <a href="/logout">Выход</a>
+                    </div>
+                    <!-- <img src="{{ url_for('static', filename='images/user-template.png') }}" alt="Image"> -->
+                    <img src="/static/images/user-template.png">
+                </div>
+                <div class="burger-menu-main">
+                    <img class="dropdown-selector" src="/static/images/burger-menu.png">
+                    <div class="dropdownMain">
+                        <a href="/profile">Профиль</a>
+                        <a href="/logout">Выход</a>
+                    </div>
+                </div>
+            </div>
+            <div class="places-main-block">
+                <div class="left-space"></div>
+                <div class="places-content-block">
+                    <div class="liked-places">
+                        <div class="liked-title">
+                            <p class="liked-places-title">Понравившиеся</p>
+                        </div>
+                        <div class="liked-places-container">
+                            <!-- Здесь будут места, которые понравились пользователю -->
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="all-places">
+                        <div class="all-title">
+                            <p class="all-places-title">Все локации</p>
+                        </div>
+                        <div class="all-places-container">
+                            <!-- Здесь будут все локации в базе -->
+                        </div>
+                    </div>
+                </div>
+                <div class="right-space"></div>
+            </div>
+        </div>
+    </body>
+
+    <script src="/static/script/locationsPage.js"></script>
+
+</html>
