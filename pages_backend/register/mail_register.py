@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for, flash
 from flask_mail import Mail
-from database.queries import code_search_in_the_database, account_confirmation
+from database.queries import code_search_in_the_database, account_confirmation, add_new_places
 from pages_backend import app
 from flask_login import current_user
 from config import link_testing
@@ -26,10 +26,10 @@ def confirm_email(code):
         
         if code_search_in_the_database(code=code):
             account_confirmation(code=code)
-            return redirect(url_for(("login")))
+            flash("Войдите в свой аккаунт")
+            return redirect(url_for(("index")))
         return redirect(url_for('index'))
     except Exception as e:
-        print(e)
         flash("Произошла внутренняя ошибка сервера. Обратитесь к администратору.", "error")
         return render_template('sign_in.html')
 
@@ -53,6 +53,5 @@ def validation_code(email) -> str:
         else:
             return render_template('validation_code.html', email=email_url)
     except Exception as e:
-        print(e)
         flash("Произошла внутренняя ошибка сервера. Обратитесь к администратору.", "error")
         return render_template('sign_in.html')

@@ -3,9 +3,6 @@ from flask_login import current_user
 from .database_admin import count_all_accounts, count_all_places
 from pages_backend import app
 
-active_users = 0
-
-
 @app.route('/admin')
 def counter():
     if current_user.is_authenticated and (current_user.username == "danila" or current_user.username == "serafim"): 

@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS places (
     site VARCHAR(255),
     break_time_start VARCHAR(255),
     break_time_end VARCHAR(255),
-    estimation DOUBLE PRECISION DEFAULT (5),
+    estimation INTEGER DEFAULT(100),
     id_point VARCHAR(255) NOT NULL
 );
 

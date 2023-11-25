@@ -14,7 +14,6 @@
 # Импорт экземпляра Flask приложения app, хоста и порта
 from culturo import app, host, port
 from pages_backend.reg import route
-from database import user_model
 
 
 # Запуск Flask приложения, отключение режима отладки и указание хоста и порта

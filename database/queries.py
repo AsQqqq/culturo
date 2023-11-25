@@ -172,12 +172,12 @@ def get_common_location_from_test():
 
 
 
-def select_all_places():
-    """Выбрать все места из глобальной базы данных"""
-    sql = "SELECT * FROM places"
-    cursor = database_query(sql_query=sql, types="return")
-    result = cursor.fetchall()
-    return result
+# def select_all_places():
+#     """Выбрать все места из глобальной базы данных"""
+#     sql = "SELECT * FROM places"
+#     cursor = database_query(sql_query=sql, types="return")
+#     result = cursor.fetchall()
+#     return result
 
 
 def select_user_profile(username: str):
@@ -198,50 +198,6 @@ def generate_hex_token_place(username: str):
         generate_hex_token_place(username=username)
         return
     return code
-
-
-def add_user_place(user_id: str, place_id: str, username: str):
-    """Добавить место в базу данных пользователя"""
-    record_id = generate_hex_token_place(username=username)
-    sql = f"SELECT * FROM {username} WHERE place_id = '{place_id}'"
-    cursor = database_query_user_place(sql_query=sql, types="return")
-    rows = cursor.fetchall()
-    if not rows:
-        sql = f"INSERT INTO {username} (place_id, user_id, record_id) VALUES ('{place_id}', '{user_id}', '{record_id}')"
-        database_query_user_place(sql_query=sql, types="none")
-
-
-def rate_place_user(place_id: str, choice: str, username: str):
-    """Лайк или дизлайк для места"""
-    if choice == "confirm":
-        sql = f"SELECT estimation FROM {username} WHERE place_id = '{place_id}'"
-        cursor = database_query_user_place(sql_query=sql, types="return")
-        row = cursor.fetchone()
-        int_row = float(row[0])
-        if int_row <= 4.85:
-            int_row_now = int_row + estimation
-            sql = f"UPDATE {username} SET estimation = '{int_row_now}' WHERE place_id = '{place_id}'"
-            database_query_user_place(sql_query=sql, types="none")
-        sql = f"UPDATE {username} SET liked = true WHERE liked = false AND place_id = '{place_id}'"
-        database_query_user_place(sql_query=sql, types="none")
-    elif choice == "trash":
-        sql = f"SELECT estimation FROM {username} WHERE place_id = '{place_id}'"
-        cursor = database_query_user_place(sql_query=sql, types="return")
-        row = cursor.fetchone()
-        int_row = float(row[0])
-        print(int_row)
-        if int_row >= 1.15:
-            int_row_now = int_row - estimation
-            sql = f"UPDATE {username} SET estimation = '{int_row_now}' WHERE place_id = '{place_id}'"
-            database_query_user_place(sql_query=sql, types="none")
-
-    sql = f"SELECT request FROM {username} WHERE place_id = '{place_id}'"
-    cursor = database_query_user_place(sql_query=sql, types="return")
-    row = cursor.fetchone()
-    int_row = int(row[0])
-    int_row_now = int_row + 1
-    sql = f"UPDATE {username} SET request = '{int_row_now}' WHERE place_id = '{place_id}'"
-    database_query_user_place(sql_query=sql, types="none")
 
 
 def select_non_liked_local(username: str):
@@ -384,7 +340,10 @@ def check_exist_in_database_user(login: str, password: str) -> bool:
 
 
 """
-
+ _____ _____ _____ _____ _____ _____ _____ _____ 
+| __  |   __|   __|     |   __|_   _|   __| __  |
+|    -|   __|  |  |-   -|__   | | | |   __|    -|
+|__|__|_____|_____|_____|_____| |_| |_____|__|__|
 
 """
 
@@ -412,7 +371,7 @@ def account_confirmation(code: str):
             user_id VARCHAR(255),
             record_id VARCHAR(255),
             liked BOOLEAN DEFAULT (FALSE),
-            estimation DOUBLE PRECISION DEFAULT (5),
+            estimation INTEGER DEFAULT(100),
             request BIGINT DEFAULT (0)
         )
     '''
@@ -480,6 +439,7 @@ def selected_verification_code(login: str) -> str:
 
 
 def generate_user_id():
+    """Гереация айди пользователя"""
     code = f"{secrets.token_hex(16)}"
     copy_query = f"SELECT * FROM accounts WHERE user_id = '{code}'"
     cursor = database_query(copy_query, "return")
@@ -491,16 +451,13 @@ def generate_user_id():
 
 
 def pre_save_account(name, surname, email, login, password):
-    try:
-        current_datetime = datetime.now()
-        sql_query = f"INSERT INTO accounts (name, surname, username, password, email, registration_date, user_id) VALUES \
-                        ('{name}', '{surname}', '{login}', '{generate_password_hash(password)}', \
-                            '{email}', '{current_datetime}', '{generate_user_id()}')"
-        database_query(sql_query, "none")
-        return True
-    except Exception as e:
-        print(e)
-        return False
+    """Пре-сохранение аккаунта"""
+    current_datetime = datetime.now()
+    sql_query = f"INSERT INTO accounts (name, surname, username, password, email, registration_date, user_id) VALUES \
+                    ('{name}', '{surname}', '{login}', '{generate_password_hash(password)}', \
+                        '{email}', '{current_datetime}', '{generate_user_id()}')"
+    database_query(sql_query, "none")
+    return True
 
 
 def checking_user(login: str) -> bool:
@@ -508,7 +465,127 @@ def checking_user(login: str) -> bool:
     sql_query = f"SELECT * FROM accounts WHERE username = '{login}' AND save = true"
     cursor = database_query(sql_query, "return")
     existing_entry = cursor.fetchone()
-    print(existing_entry)
     if existing_entry:
         return False    
     return True
+
+
+"""
+ _____ __    _____ _____ _____ _____ _____ _____ _____ 
+|  _  |  |  |   __|     | __  |     |_   _|  |  |     |
+|     |  |__|  |  |  |  |    -|-   -| | | |     | | | |
+|__|__|_____|_____|_____|__|__|_____| |_| |__|__|_|_|_|
+
+"""
+
+
+def select_all_my_recommendation(username: str):
+    """Получение всех откланенных карточек в базе данных пользователя"""
+    sql_query = f"SELECT place_id FROM {username} WHERE liked = false"
+    cursor = database_query_user_place(sql_query, "return")
+    result = cursor.fetchall()
+    return result
+
+
+def select_all_my_recommendationTRUE(username: str):
+    """Получение всех откланенных карточек в базе данных пользователя"""
+    sql_query = f"SELECT place_id FROM {username} WHERE liked = true"
+    cursor = database_query_user_place(sql_query, "return")
+    result = cursor.fetchall()
+    return result
+
+
+def select_all_places():
+    sql_query = "SELECT id_point FROM places"
+    cursor = database_query(sql_query, "return")
+    result = cursor.fetchall()
+    return result
+
+
+def add_new_places(user_id: str, place_id: str, username: str):
+    """Добавить место в базу данных пользователя"""
+    record_id = generate_hex_token_place(username=username)
+    sql = f"SELECT * FROM {username} WHERE place_id = '{place_id[0]}'"
+    cursor = database_query_user_place(sql_query=sql, types="return")
+    rows = cursor.fetchall()
+    print(rows)
+    if not rows:
+        sql = f"INSERT INTO {username} (place_id, user_id, record_id) VALUES ('{place_id[0]}', '{user_id}', '{record_id}')"
+        database_query_user_place(sql_query=sql, types="none")
+
+
+def exist_recommendation(place_id: str, username: str):
+    "Проверка на существования в базе данных"
+    sql_query = f"SELECT * FROM {username} WHERE place_id = '{place_id}'"
+    cursor = database_query_user_place(sql_query=sql_query, types='return')
+    result = cursor.fetchall()
+    if result:
+        return True
+    return False
+
+
+def select_places_statistics(place_id: str, username: str):
+    "Чтение баллов и просмотров на карточку"
+    sql_query = f"SELECT estimation, request FROM {username} WHERE place_id = '{place_id}'"
+    cursor = database_query_user_place(sql_query=sql_query, types="return")
+    result = cursor.fetchall()
+    return result
+
+
+def select_common_location_with_place_id(place_id: str):
+    "Чтение локации о месте по токену"
+    sql_query = f"SELECT common_location FROM places WHERE id_point = '{place_id}'"
+    cursor = database_query(sql_query=sql_query, types="return")
+    result = cursor.fetchone()
+    return result
+
+
+def select_info_with_place_id(place_id: str):
+    "Чтение всей информации о месте"
+    sql_query = f"SELECT name_photo, name, description FROM places WHERE id_point = '{place_id}'"
+    cursor = database_query(sql_query=sql_query, types="return")
+    result = cursor.fetchall()
+    return result
+
+
+def rate_place_user(place_id: str, choice: str, username: str):
+    try:
+        """Лайк или дизлайк для места"""
+        if choice == "confirm": 
+            sql = f"SELECT estimation FROM {username} WHERE place_id = '{place_id}'"
+            cursor = database_query_user_place(sql_query=sql, types="return")
+            row = cursor.fetchone()
+            int_row = int(row[0])
+            if int_row <= 99:
+                int_row_now = int_row + estimation
+                sql = f"UPDATE {username} SET estimation = '{int_row_now}' WHERE place_id = '{place_id}'"
+                database_query_user_place(sql_query=sql, types="none")
+            sql = f"UPDATE {username} SET liked = true WHERE liked = false AND place_id = '{place_id}'"
+            database_query_user_place(sql_query=sql, types="none")
+        elif choice == "trash":
+            sql = f"SELECT liked FROM {username} WHERE place_id = '{place_id}'"
+            cursor = database_query_user_place(sql_query=sql, types="return")
+            result = cursor.fetchone()
+            if result[0] == True:
+                sql = f"UPDATE {username} SET liked = false WHERE place_id = '{place_id}'"
+                cursor = database_query_user_place(sql_query=sql, types="none")
+            else:
+                if int_row >= 2:
+                    int_row_now = int_row - estimation
+                    sql = f"UPDATE {username} SET estimation = '{int_row_now}' WHERE place_id = '{place_id}'"
+                    database_query_user_place(sql_query=sql, types="none")
+
+            sql = f"SELECT estimation FROM {username} WHERE place_id = '{place_id}'"
+            cursor = database_query_user_place(sql_query=sql, types="return")
+            row = cursor.fetchone()
+            int_row = int(row[0])
+
+        sql = f"SELECT request FROM {username} WHERE place_id = '{place_id}'"
+        cursor = database_query_user_place(sql_query=sql, types="return")
+        row = cursor.fetchone()
+        int_row = int(row[0])
+        int_row_now = int_row + 1
+        sql = f"UPDATE {username} SET request = '{int_row_now}' WHERE place_id = '{place_id}'"
+        database_query_user_place(sql_query=sql, types="none")
+    except Exception as e:
+        print(e)

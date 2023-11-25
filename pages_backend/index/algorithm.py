@@ -16,10 +16,9 @@ from flask import render_template, flash, jsonify, request
 from pages_backend import app
 from flask_login import current_user
 from flask_login import current_user
-from database.queries import select_user_profile, select_all_places, add_user_place, rate_place_user, select_non_liked_local, select_global_ids, \
-    select_global_info, select_all_local_info, select_local_info
+from database.queries import select_all_places, add_new_places, rate_place_user, select_all_my_recommendation, exist_recommendation, select_places_statistics, select_common_location_with_place_id, select_info_with_place_id, rate_place_user, select_all_my_recommendationTRUE
 
-
+place_id = "None"
 
 
 @app.route('/get_data', methods=['GET', 'POST'])
@@ -27,6 +26,7 @@ def get_data():
     "Работа свайпов для выявления результатов мест"
     global place_id
     try:
+        add_user_place()
         if request.method == "POST":
             data_pages = request.get_json()
             if data_pages == 'confirm':
@@ -34,124 +34,79 @@ def get_data():
             elif data_pages == 'trash':
                 rate_place_user(place_id=place_id, choice="trash", username=current_user.username)
 
-            data = fetch_data_from_postgresql()
-            if data == None:
-                data = ('none_png.png', 'Пустой заголовок.', 'Попробуйте обновить страницу.')
-                return jsonify(data)
-            else:
-                card_data = [data[0], data[1], data[2]]
-                return jsonify(card_data)
+            data = alhorithm_site()
+            card_data = [data[0], data[1], data[2]]
+            return jsonify(card_data)
         
         elif request.method == "GET":
-            data = fetch_data_from_postgresql()
-            if data == None:
-                data = ('none_png.png', 'Пустой заголовок.', 'Попробуйте обновить страницу.')
-                return jsonify(data)
-            else:
-                card_data = [data[0], data[1], data[2]]
-                add_user_place(user_id=current_user.user_id, place_id=place_id, username=current_user.username)
-                return jsonify(card_data)
+            data = alhorithm_site()
+            card_data = [data[0], data[1], data[2]]
+            return jsonify(card_data)
     except Exception as e:
-        print(e)
         flash("Произошла внутренняя ошибка сервера. Обратитесь к администратору.", "error")
         return render_template('sign_in.html')
 
 
-def fetch_data_from_postgresql():
+def add_user_place():
+    "Запись новой карточки если её нет"
+    all_places = select_all_places()
+    if all_places:
+        for i in all_places:
+            if exist_recommendation(place_id=i[0], username=current_user.username) == False:
+                add_new_places(user_id=current_user.user_id, place_id=i, username=current_user.username)
+
+
+
+def alhorithm_site():
     """Алгоритм сайта"""
     global place_id
     try:
-        username = current_user.username
-        location = current_user.common_location
+        all_common_location = select_all_my_recommendation(username=current_user.username)
+        all_places = select_all_my_recommendationTRUE(username=current_user.username)
+        id_places_main = []
+        statistic_integration = []
+        best_places = []
 
-        exist = select_user_profile(username=username)
-        if not exist:
-            return select_recom_place(location=location)
+        if all_common_location:
+            for i in all_common_location:
+                id_places_main.append(i[0])
         else:
-            exist_local = select_non_liked_local(username=username)
-            exist_local_all = select_all_local_info(username=username)
-            exist_global = select_global_ids()
-            best_point = select_max_ectimation(exist_local, exist_global, exist_local_all)
-            print(f"best_point :: {best_point}")
-            if best_point == None:
-                place_id = None
-                return None
-            else:
-                place_id = best_point[0][15]
-                return best_point[0][2], best_point[0][1], best_point[0][3]
+            for i in all_places:
+                id_places_main.append(i[0])
+
+
+        for i in id_places_main:
+            result = select_places_statistics(place_id=i, username=current_user.username)
+            list_ = [i, result[0][0], result[0][1]]
+            statistic_integration.append(list_)
+
+        print("LOGIC----------------")
+        for _ in range(0, 3):
+            best_places = place_generator(statistic_integration=statistic_integration, best_places=best_places)
+        print("END-----------------")
+
+        place_id = best_places[0]
+        info_places = select_info_with_place_id(place_id=best_places[0])
+
+        print(f"Place id:\n{place_id}")
+        for i in info_places:
+            return i[0], i[1], i[2]
+
+        return None
     except Exception as e:
         print(e)
 
 
-def select_recom_place(location: str):
-    global place_id
-    exist = select_all_places()
-    if exist:
-        if count_location(exists=exist, location=location) > 2:
-            for i in exist:
-                if str(i[9]) == location:
-                    place_id = i[15]
-                    return i[2], i[1], i[3]
+
+def place_generator(statistic_integration: list, best_places: str):
+    for i in statistic_integration:
+        if not best_places:
+            best_places = [i[0], i[1], i[2]]
         else:
-            if count_location(exists=exist, location=location) == 1:
-                for i in exist:
-                    if str(i[9]) == location:
-                        place_id = i[15]
-                        return i[2], i[1], i[3]
-            else:
-                for i in exist:
-                    place_id = i[15]
-                    return i[2], i[1], i[3]
-
-
-
-def select_max_ectimation(exist_local, exist_global, exist_local_all):
-    max_local = []
-    max_global = []
-    max_local_all = []
-
-    for i in exist_local:
-        max_local.append((i[1], i[0]))
-    
-    for i in exist_local_all:
-        max_local_all.append((i[1], i[0]))
-    
-    for i in exist_global:
-        max_global.append((i[0], i[1]))
-
-    max_global = [i for i in max_global if i[1] not in [j[1] for j in max_local_all]]
-
-    if max_global:
-        best_place = max(max_global, key=lambda x: x[0])[1]
-        best_place = select_global_info(place_id=best_place)
-        return best_place
-    else:
-        if max_local:
-            max_local_return = []
-            max_score = None
-            for i in max_local:
-                selected = select_local_info(username=current_user.username, place_id=i[1])
-                # print(selected)
-                current_score = float(selected[5])
-                current_requests = int(selected[6])
-                
-                if max_score is None or current_score > max_score:
-                    max_score = current_score
-                    max_local_return = [(selected[1], selected[5], selected[6])]
-                elif current_score == max_score and current_requests < max_local_return[0][2]:
-                    max_local_return = [(selected[1], selected[5], selected[6])]
-
-            # print(max_local_return)
-            
-            best_place = select_global_info(place_id=max_local_return[0][0])
-            return best_place
-        else:
-            return None
-
-def count_location(exists, location: str):
-    """Просмотр сколько значений есть для локации в выводе postgresql"""
-    count = 0
-    for i in exists:
-        if str(i[9]) == location:
-            count += 1
-    return count
+            if int(best_places[1]) < int(i[1]) and int(best_places[2]) > int(i[2]):
+                if select_common_location_with_place_id(place_id=i[0])[0] == current_user.common_location:
+                    best_places = [i[0], i[1], i[2]]
+                else:
+                    best_places = [i[0], i[1], i[2]]
+    print(f"По тестам лучшая карточка:\n{best_places}")
+    return best_places

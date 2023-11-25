@@ -16,4 +16,4 @@ link_testing = "testing"
 # Переадресация на главну страницу
 link_index = "index"
 # Оценка кейсов
-estimation = 0.15
+estimation = 1
