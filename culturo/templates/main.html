@@ -1,16 +1,22 @@
 <!DOCTYPE html>
+
+<!-- Страница со свайпами -->
+
 <html>
+
     <head>
         <meta charset="utf-8">
 		<title>Культуро</title>
-		<meta name="viewport" content="width=device-width">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 		<link rel="stylesheet" href="{{ url_for('static', filename='fonts/material-design-iconic-font/css/material-design-iconic-font.min.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
         <!-- <link rel="stylesheet" href="/static/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
         <link rel="stylesheet" href="/static/css/style.css"> -->
         <script src="/static/script/closeMessage.js"></script>
     </head>
+
     <body>
+
         {% with messages = get_flashed_messages() %}
 		{% if messages %}
             <div id="popupContainer">
@@ -20,53 +26,115 @@
             </div>
         {% endif %}
     	{% endwith %}
-        <div class="parent">
-            <div class="head-blockMain">
-                <div class="logo-holderMain">
-                    <!-- <img src="/static/images/logo.png"> -->
-                    <img src="{{ url_for('static', filename='/images/logo.png') }}">
+
+        <div class="parent-main-page">
+            <!-- Шапка -->
+            <div class="head-block-main">
+                <div class="back-link-main">
+                    <a href="/"><</a>
                 </div>
-                <div class="navigation-blockMain">
-                    <a id="headLink" href="#" onclick="switchContentHead()">Главная</a>
-                    <a id="placesLink" href="#" onclick="switchContentPlaces()">Места</a>
+                <div class="logo-holder-main">
+                    <a href="/">
+                        <!-- <img src="/static/images/logo.png"> -->
+                        <img src="{{ url_for('static', filename='/images/logo.png') }}">
+                    </a>
                 </div>
-                <div class="userInfoMain">
-                    <p class="userNameMain">{{ username }}</p>
+                <div class="navigation-block-main">
+                    <a id="headLink" href="/main" onclick="switchContentHead()">Главная</a>
+                    <a id="placesLink" href="/locations" onclick="switchContentPlaces()">Локации</a>
+                </div>
+                <div class="user-info-main">
+                    <p class="dropdown-selector">{{ username }}</p>
                     <div class="dropdownMain">
                         <a href="/profile">Профиль</a>
                         <a href="/logout">Выход</a>
                     </div>
-                    <!-- <img src="/static/images/user-template.png"> -->
                     <img src="{{ url_for('static', filename='images/user-template.png') }}" alt="Image">
+                    <!-- <img src="/static/images/user-template.png"> -->
+                </div>
+                <div class="burger-menu-main">
+                    <img class="dropdown-selector" src="/static/images/burger-menu.png">
+                    <div class="dropdownMain">
+                        <a href="/profile">Профиль</a>
+                        <a href="/logout">Выход</a>
+                    </div>
                 </div>
             </div>
-            <div class="main-block main-page" id="main-block">
-                <div id="trash-icon" class="hidden trash-icon">
-                    <!-- <img height="40px" width="40px" src="/static/images/bin.png"> -->
-                    <img height="40px" width="40px" src="{{ url_for('static', filename='/images/bin.png') }}">
-                </div>
-                <div id="swipe-container">
-                    <div class="card" id="card" data-id-place="" style="background-image: url(/static/images/cards/none_png.png);">
-                        <div class="infoHolder">
-                            <div class="innerInfoCard" id="innerInfoCard">
-                                <h4>Пустой заголовок.</h4>
-                            </div>
-                            <div class="innerDescriptionCard" id="innerDescriptionCard">
-                                <p>Попробуйте обновить страницу.</p>
-                            </div>
-                            <div id="ratingContainer" class="rating">
-                                <span></span><span></span><span></span><span></span><span></span>
+            <div class="content-block-main" id="content-block-main">
+                <div class="card-block-main" id="card-block-main">
+                    <!-- Блок с иконкой "Не нравится" -->
+                    <div class="trash-icon" id="trash-icon">
+                        <img height="40px" width="40px" src="{{ url_for('static', filename='/images/bin.png') }}">
+                        <!-- <img height="40px" width="40px" src="/static/images/bin.png"> -->
+                    </div>
+                    <!-- Карточка мероприятия -->
+                    <div id="swipe-container">
+                        <div class="card" id="card" data-id-place="" style="background-image: url(/static/images/cards/none_png.png);">
+                            <div class="info-holder">
+                                <div class="innerInfoCard" id="innerInfoCard">
+                                    <h4>Пустой заголовок</h4>
+                                </div>
+                                <div id="ratingContainer" class="rating">
+                                    <span></span><span></span><span></span><span></span><span></span>
+                                </div>
+                                <div class="details-button-container">
+                                    <button class="details-button" id="details-button" onclick="showDetailsCard()">Детали
+                                        <i class="zmdi zmdi-arrow-right"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div id="confirm-icon" class="hidden confirm-icon">
-                    <!-- <img height="40px" width="40px" src="/static/images/confirm.png"> -->
-                    <img height="40px" width="40px" src="{{ url_for('static', filename='/images/confirm.png') }}">
+                    <!-- Детали карточки мероприятия -->
+                    <div id="details-container">
+                        <!-- Адрес-->
+                        <div class="details-address-information">
+                            <p id="address">Адрес</p>
+                        </div>
+                        <div class="divider details"></div>
+                        <div class="details-phone-information">
+                            <p id="phone">Телефон</p>
+                        </div>
+                        <div class="divider details"></div>
+                        <div class="details-hours-information">
+                            <p id="work-time">Работает: </p>
+                            <p id="break time">Перерыв: </p>
+                        </div>
+                        <div class="divider details"></div>
+                        <div class="details-days-information">
+                            <p id="days-title">Рабочие дни:</p>
+                            <div class="details-days-week">
+                                <p id="monday">ПН</p>
+                                <p id="tuesday">ВТ</p>
+                                <p id="wednesday">СР</p>
+                                <p id="thursday">ЧТ</p>
+                                <p id="friday">ПТ</p>
+                                <p id="saturday">СБ</p>
+                                <p id="sunday">ВС</p>
+                            </div>
+                        </div>
+                        <div class="divider details"></div>
+                        <div class="details-desciption-information">
+                            <p id="description-title">Описание</p>
+                        </div>
+                        <div class="details-description">
+                            <p>Текст описания</p>
+                        </div>
+                        <div class="details-back-button">
+                            <button class="back-button" onclick="hideDetailsCard()"><i class="zmdi zmdi-arrow-left"></i>Вернуться</button>
+                        </div>
+                    </div>
+                    <!-- Блок с иконкой "Нравится" -->
+                    <div class="confirm-icon" id="confirm-icon">
+                        <img height="40px" width="40px" src="{{ url_for('static', filename='/images/confirm.png') }}">
+                        <!-- <img height="40px" width="40px" src="/static/images/confirm.png"> -->
+                    </div>
                 </div>
             </div>
         </div>
     </body>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
     <script src="/static/script/mainPage.js"></script>
+
 </html>

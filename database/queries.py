@@ -496,6 +496,7 @@ def select_all_my_recommendationTRUE(username: str):
 
 
 def select_all_places():
+    """Чтение айдишек всех мест"""
     sql_query = "SELECT id_point FROM places"
     cursor = database_query(sql_query, "return")
     result = cursor.fetchall()

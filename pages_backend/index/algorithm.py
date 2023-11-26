@@ -15,8 +15,11 @@
 from flask import render_template, flash, jsonify, request
 from pages_backend import app
 from flask_login import current_user
-from flask_login import current_user
-from database.queries import select_all_places, add_new_places, rate_place_user, select_all_my_recommendation, exist_recommendation, select_places_statistics, select_common_location_with_place_id, select_info_with_place_id, rate_place_user, select_all_my_recommendationTRUE
+from database.queries import (select_all_places, add_new_places, rate_place_user, 
+    select_all_my_recommendation, exist_recommendation, select_places_statistics, 
+    select_common_location_with_place_id, select_info_with_place_id, rate_place_user, 
+    select_all_my_recommendationTRUE)
+
 
 place_id = "None"
 
@@ -35,12 +38,16 @@ def get_data():
                 rate_place_user(place_id=place_id, choice="trash", username=current_user.username)
 
             data = alhorithm_site()
+            print(data)
             card_data = [data[0], data[1], data[2]]
+            print(jsonify(card_data))
             return jsonify(card_data)
         
         elif request.method == "GET":
             data = alhorithm_site()
+            print(data)
             card_data = [data[0], data[1], data[2]]
+            print(jsonify(card_data))
             return jsonify(card_data)
     except Exception as e:
         flash("Произошла внутренняя ошибка сервера. Обратитесь к администратору.", "error")
@@ -56,7 +63,6 @@ def add_user_place():
                 add_new_places(user_id=current_user.user_id, place_id=i, username=current_user.username)
 
 
-
 def alhorithm_site():
     """Алгоритм сайта"""
     global place_id
@@ -67,7 +73,10 @@ def alhorithm_site():
         statistic_integration = []
         best_places = []
 
-        if all_common_location:
+        print(len(all_common_location))
+        print(all_common_location)
+
+        if len(all_common_location) >= 3:
             for i in all_common_location:
                 id_places_main.append(i[0])
         else:
@@ -88,17 +97,18 @@ def alhorithm_site():
         place_id = best_places[0]
         info_places = select_info_with_place_id(place_id=best_places[0])
 
-        print(f"Place id:\n{place_id}")
         for i in info_places:
+            print("Проверка-----------------------")
+            print(place_id)
+            print(i[0])
+            print("Проверка-----------------------")
             return i[0], i[1], i[2]
-
-        return None
     except Exception as e:
         print(e)
 
 
-
 def place_generator(statistic_integration: list, best_places: str):
+    "Логика подбора лучшей карточки"
     for i in statistic_integration:
         if not best_places:
             best_places = [i[0], i[1], i[2]]
